@@ -14,16 +14,22 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import CircularProgress from '@mui/material/CircularProgress';
+import FormControl from '@mui/material/FormControl';
+import InputLabel from '@mui/material/InputLabel';
+import Select from '@mui/material/Select';
+import MenuItem from '@mui/material/MenuItem';
 
-const ListCust = () => {
-    const [ data, setData ] = useState([]);
+const listUniversity = () => {
     const navigate = useNavigate();
+    const [ data, setData ] = useState([]);
     const [ loading, setLoading ] = useState(false);
+    const [ page, setPage ] = useState(1);
+    const [ country, setCountry ] = useState('');
 
     const getData = async () => {
       setLoading(true);
 
-      await api.get('universities')
+      await api.get(`universities?page=${page}`)
           .then(({ data }) => {
             setData(data);
             setLoading(false);
@@ -33,13 +39,21 @@ const ListCust = () => {
 
       useEffect(() => {
         getData();
-      }, []);
+      }, [page]);
 
       const deleteCustomer = async (id, name) => {
         if (window.confirm(`Excluir ${name}?`)) {
-          await api.delete(`customers/${id}`)
+          await api.delete(`universities/${id}`)
             .then(() => getData())
             .catch(e => console.log(e));
+        }
+      }
+
+      const countPage = (action) => {
+        if (action === 'increase' && page < data.slice(-1)[0].from) {
+          setPage(page + 1);
+        } else if (action === 'decrease' && page > 1) {
+          setPage(page - 1);
         }
       }
 
@@ -49,9 +63,33 @@ const ListCust = () => {
         {/* { data.length === 0 ? <h3>Nenhum registro encontrado</h3> : <> */}
         { loading ? <h3><CircularProgress /></h3> : <>
 
-        <h3>Lista de Clientes</h3>
+        <h3>Lista de Universidades</h3>
+
+        <FormControl sx={{ width: 300 }}>
+              <InputLabel id="demo-simple-select-label">Selecione o País</InputLabel>
+              <Select
+                labelId="demo-simple-select-label"
+                id="demo-simple-select"
+                value={country}
+                label="Forma de Pagamento"
+                onChange={e => setCountry(e.target.value)}>
+
+                <MenuItem value={'Cartão de Crédito'}>Cartão de Crédito</MenuItem>
+                <MenuItem value={'Dinheiro'}>Dinheiro</MenuItem>
+                <MenuItem value={'Débito'}>Débito</MenuItem>
+                <MenuItem value={'Vale Alimentação'}>Vale Alimentação</MenuItem>
+                <MenuItem value={'Pix'}>Pix</MenuItem>
+                
+              </Select>
+            </FormControl>
+
+
         <TableContainer component={Paper}>
           <Table sx={{ minWidth: 700 }} aria-label="customized table">
+
+
+
+            
               <TableHead>
               <TableRow>
                   <StyledTableCell align="center">ID</StyledTableCell>
@@ -63,7 +101,7 @@ const ListCust = () => {
               </TableRow>
               </TableHead>
               <TableBody>
-              {data.map((item) => (
+              {data.map((item, index) => (
                   <StyledTableRow key={item._id}>
                   <StyledTableCell align="center" component="th" scope="row">
                       {item._id}
@@ -71,8 +109,23 @@ const ListCust = () => {
                   <StyledTableCell align="left">{item.name}</StyledTableCell>
                   <StyledTableCell align="center">{item.country}</StyledTableCell>
                   <StyledTableCell align="left">{item['state-province']}</StyledTableCell>
-                  <StyledTableCell align="right"><button onClick={() => navigate(`/customer/${item.id}`)}>Alterar</button></StyledTableCell>
-                  <StyledTableCell align="right"><button onClick={() => deleteCustomer(item.id, item.name)}>Excluir</button></StyledTableCell>
+                  
+                  { index !== data.length-1 ?
+                    <>
+                      <StyledTableCell align="right"><button onClick={() => navigate(`/university/${item._id}`)}>Alterar</button></StyledTableCell>
+                      <StyledTableCell align="right"><button onClick={() => deleteCustomer(item._id, item.name)}>Excluir</button></StyledTableCell>
+                    </>
+                   :
+                    <>
+                      <StyledTableCell colSpan={3} align="right">
+                        <button onClick={() => countPage('decrease')}>{'<'}</button>Página {item.page} de {item.from}
+                        <button onClick={() => countPage('increase')}>{'>'}</button>
+                      </StyledTableCell>
+                      {/* <StyledTableCell align="right">Página {item.page} de {item.from}</StyledTableCell> */}
+                      {/* <StyledTableCell align="right"><button>{'>>>'}</button></StyledTableCell> */}
+                    </>
+                  }
+
                   </StyledTableRow>
               ))}
               </TableBody>
@@ -116,4 +169,4 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   },
 }));
 
-export default ListCust;
+export default listUniversity;

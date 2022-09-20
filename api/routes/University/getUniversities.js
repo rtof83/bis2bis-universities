@@ -17,10 +17,10 @@ getUniversities.get('/', async (req, res) => {
       const startFrom = (pageNumber - 1) * perPage;
 
       // GET universities by country and/or pagination
-      universities = await University.find(query);
+      // universities = await University.find(query);
 
       if (pageNumber > 0 && pageNumber <= pages) {
-        universities = await University.find()
+        universities = await University.find(query)
           .sort('country')
           .skip(startFrom)
           .limit(perPage)
