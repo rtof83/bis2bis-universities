@@ -1,4 +1,4 @@
-const createUniversities = {
+const Create = {
     url: 'http://universities.hipolabs.com/search?country=',
     countries: [ "argentina",
                  "brazil",
@@ -10,4 +10,4 @@ const createUniversities = {
                  "uruguay" ]
 };
 
-export default createUniversities;
+export default Create;
