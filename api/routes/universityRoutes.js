@@ -1,58 +1,11 @@
-// const router = require('express').Router();
 import express from 'express';
 import axios from 'axios';
 import University from '../models/University.js';
 import createUniversities from '../createUniversities.js';
 
 const router = express.Router();
-// const urlCreate = 'http://universities.hipolabs.com/search?country=';
 
-// router.post('/', async (req, res) => {
-//   const { name, desc, quant, price, image } = req.body;
-
-//   const product = {
-//     name,
-//     desc,
-//     quant,
-//     price,
-//     image
-//   };
-
-//   try {
-//     await Product.create(product);
-
-//     res.status(201).json({ message: 'Record inserted successfully!' });
-//   } catch (error) {
-//     res.status(500).json({ erro: error });
-//   }
-// })
-
-
-
-
-router.post('/', async (req, res) => {
-  // const { alpha_two_code, web_pages, name, domains, state_province } = req.body;
-  const university = req.body;
-
-  // const university = {
-  //   name,
-  //   desc,
-  //   quant,
-  //   price,
-  //   image
-  // };
-
-  try {
-    await University.create(university);
-    res.status(201).json({ message: 'Record inserted successfully!' });
-  } catch (error) {
-    res.status(500).json({ erro: error });
-  }
-})
-
-
-
-
+// CREATE universities
 router.post('/create', async (_, res) => {
   await University.deleteMany();
 
@@ -69,79 +22,100 @@ router.post('/create', async (_, res) => {
   res.status(201).json({ message: 'Created!' });
 })
 
+// POST university
+router.post('/', async (req, res) => {
+  const university = req.body;
 
-
-router.get('/', async (_, res) => {
-try {
-  const universities = await University.find();
-
-  res.status(200).json(universities);
-} catch (error) {
-  res.status(500).json({ erro: error });
-}
+  try {
+    await University.create(university);
+    res.status(201).json({ message: 'Record inserted successfully!' });
+  } catch (error) {
+    res.status(500).json({ erro: error });
+  }
 })
 
-// router.delete('/:id', async (req, res) => {
-// const id = req.params.id;
+// GET ALL universities or by country
+router.get('/', async (req, res) => {
+  try {
+    const universities = req.query.country ? await University.find({ country: req.query.country }) : await University.find();
 
-// const product = await Product.findOne({ _id: id });
+    res.status(200).json(universities);
+  } catch (error) {
+    res.status(500).json({ erro: error });
+  }
+})
 
-// if (!product) {
-//   res.status(422).json({ message: 'Produto não encontrado!' });
-//   return
-// }
 
-// try {
-//   await Product.deleteOne({ _id: id });
+// testing pagination
+router.get('/page', async (_, res) => {
+  try {
+    console.log(await University.count());
+    const universities = await University.find()
+    .sort('country')
+      .skip(0)
+      .limit(20)
+      .exec();;
 
-//   res.status(200).json({ message: 'Produto removido com sucesso!' });
-// } catch (error) {
-//   res.status(500).json({ erro: error });
-// }
-// })
+    res.status(200).json(universities);
+  } catch (error) {
+    res.status(500).json({ erro: error });
+  }
+})
+// testing pagination
 
-// router.patch('/:id', async (req, res) => {
-// const id = req.params.id;
 
-// const { name, desc, quant, price, image } = req.body;
+// DELETE university
+router.delete('/:id', async (req, res) => {
+  const id = req.params.id;
+  const university = await University.findOne({ _id: id });
 
-// const product = {
-//   name,
-//   desc,
-//   quant,
-//   price,
-//   image
-// };
+  if (!university) {
+    res.status(422).json({ message: 'Record not found!' });
+    return
+  }
 
-// try {
-//   const updatedProduct = await Product.updateOne({ _id: id }, product);
+  try {
+    await University.deleteOne({ _id: id });
 
-//   if (updatedProduct.matchedCount === 0) {
-//     res.status(422).json({ message: 'Produto não encontrado!' });
-//     return
-//   }
+    res.status(200).json({ message: 'Record deleted successfully!' });
+  } catch (error) {
+    res.status(500).json({ erro: error });
+  }
+})
 
-//   res.status(200).json(product);
-// } catch (error) {
-//   res.status(500).json({ erro: error });
-// }
-// })
+// GET university by _id
+router.get('/:id', async (req, res) => {
+  try {
+    const university = await University.findOne({ _id: req.params.id });
 
-// router.get('/:id', async (req, res) => {
-// const id = req.params.id;
+    if (!university) {
+      res.status(422).json({ message: 'Record not found!' });
+      return
+    }
 
-// try {
-//   const product = await Product.findOne({ _id: id });
+    res.status(200).json(university);
+  } catch (error) {
+    res.status(500).json({ erro: error });
+  }
+})
 
-//   if (!product) {
-//     res.status(422).json({ message: 'Pedido não encontrado!' });
-//     return
-//   }
+// UPDATE university
+router.put('/:id', async (req, res) => {
+  const id = req.params.id;
+  const university = req.body;
 
-//   res.status(200).json(product);
-// } catch (error) {
-//   res.status(500).json({ erro: error });
-// }
-// })
+  try {
+    const updateUniversity = await University.updateOne({ _id: id }, university);
+
+    if (updateUniversity.matchedCount === 0) {
+      res.status(422).json({ message: 'Record not found!' });
+      return
+    }
+
+    res.status(200).json(updateUniversity);
+  } catch (error) {
+    res.status(500).json({ erro: error });
+  }
+})
 
 export default router;

@@ -23,7 +23,7 @@ const ListCust = () => {
     const getData = async () => {
       setLoading(true);
 
-      await api.get('customers')
+      await api.get('universities')
           .then(({ data }) => {
             setData(data);
             setLoading(false);
@@ -54,19 +54,23 @@ const ListCust = () => {
           <Table sx={{ minWidth: 700 }} aria-label="customized table">
               <TableHead>
               <TableRow>
-                  <StyledTableCell align="center">Nome</StyledTableCell>
-                  <StyledTableCell align="center">Email</StyledTableCell>
+                  <StyledTableCell align="center">ID</StyledTableCell>
+                  <StyledTableCell align="left">Nome</StyledTableCell>
+                  <StyledTableCell align="center">País</StyledTableCell>
+                  <StyledTableCell align="left">Estado</StyledTableCell>
                   <StyledTableCell align="right" />
                   <StyledTableCell align="right" />
               </TableRow>
               </TableHead>
               <TableBody>
               {data.map((item) => (
-                  <StyledTableRow key={item.id}>
+                  <StyledTableRow key={item._id}>
                   <StyledTableCell align="center" component="th" scope="row">
-                      {item.name}
+                      {item._id}
                   </StyledTableCell>
-                  <StyledTableCell align="center">{item.email}</StyledTableCell>
+                  <StyledTableCell align="left">{item.name}</StyledTableCell>
+                  <StyledTableCell align="center">{item.country}</StyledTableCell>
+                  <StyledTableCell align="left">{item['state-province']}</StyledTableCell>
                   <StyledTableCell align="right"><button onClick={() => navigate(`/customer/${item.id}`)}>Alterar</button></StyledTableCell>
                   <StyledTableCell align="right"><button onClick={() => deleteCustomer(item.id, item.name)}>Excluir</button></StyledTableCell>
                   </StyledTableRow>

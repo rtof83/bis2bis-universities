@@ -6,7 +6,7 @@ const University = mongoose.model('University', {
   name: String,
   country: String,
   domains: Array,
-  state_province: String
+  'state-province': String
 });
 
 export default University;
