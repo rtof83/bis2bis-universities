@@ -47,14 +47,23 @@ router.get('/', async (req, res) => {
 
 
 // testing pagination
-router.get('/page', async (_, res) => {
+router.get('/page', async (req, res) => {
+  let perPage = 2;
+  let total = await University.count();
+  let pages = Math.ceil(total / perPage);
+  let pageNumber = !req.query.page ? 1 : req.query.page;
+  let startFrom = (pageNumber - 1) * perPage;
+
   try {
-    console.log(await University.count());
-    const universities = await University.find()
-    .sort('country')
-      .skip(0)
-      .limit(20)
-      .exec();;
+    let universities = await University.find()
+      .sort('country')
+      .skip(startFrom)
+      .limit(perPage)
+      .exec();
+
+    // adding pagination to array
+    if (pageNumber <= pages)
+      universities.push({ page: parseInt(pageNumber), from: pages });
 
     res.status(200).json(universities);
   } catch (error) {
