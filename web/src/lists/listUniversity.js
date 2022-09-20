@@ -32,7 +32,9 @@ const listUniversity = () => {
     const getData = async () => {
       setLoading(true);
 
-      await api.get('universities?page=' + page + (country ? '&country=' + country : ''))
+      await api.get('universities?page=' + page +
+                    (country ? '&country=' + country : '') +
+                    (search ? '&name=' + search : ''))
           .then(({ data }) => {
             setData(data);
             setLoading(false);
@@ -90,6 +92,7 @@ const listUniversity = () => {
             onChange={e => {
                 setCountry(e.target.value);
                 setPage(1);
+                setSearch('');
               }}>
 
             { countries.map(item => 
@@ -99,8 +102,8 @@ const listUniversity = () => {
         </FormControl>
         <button onClick={() => setCountry('')}>Listar todos</button>
 
-        <TextField id="txtSearch" label="Digite o nome da Universidade" variant="outlined" value={search} onChange={e => setSearch(e.target.value)} />
-        <button onClick={() => setCountry('')}>Buscar</button>
+        <TextField id="txtSearch" label="Digite o nome da Universidade" variant="outlined" value={search} onChange={e => setSearch(e.target.value)} onKeyDown={e => e.key === 'Enter' && getData()} />
+        <button onClick={() => getData()}>Buscar</button>
 
         <TableContainer component={Paper}>
           <Table sx={{ minWidth: 700 }} aria-label="customized table">
