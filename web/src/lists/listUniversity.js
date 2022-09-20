@@ -18,28 +18,43 @@ import FormControl from '@mui/material/FormControl';
 import InputLabel from '@mui/material/InputLabel';
 import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
+import TextField from '@mui/material/TextField';
 
 const listUniversity = () => {
     const navigate = useNavigate();
     const [ data, setData ] = useState([]);
     const [ loading, setLoading ] = useState(false);
     const [ page, setPage ] = useState(1);
-    const [ country, setCountry ] = useState('');
+    const [ countries, setCountries ] = useState([]);
+    const [ country, setCountry ] = useState('Brazil');
+    const [ search, setSearch ] = useState('');
 
     const getData = async () => {
       setLoading(true);
 
-      await api.get(`universities?page=${page}`)
+      await api.get('universities?page=' + page + (country ? '&country=' + country : ''))
           .then(({ data }) => {
             setData(data);
             setLoading(false);
           })
           .catch(e => console.log(e));
-      };
+    };
+
+    const getCountries = async () => {
+      await api.get(`universities/countries`)
+        .then(({ data }) => {
+          setCountries(data);
+        })
+        .catch(e => console.log(e));
+    };
+
+      useEffect(() => {
+        getCountries();
+      }, []);
 
       useEffect(() => {
         getData();
-      }, [page]);
+      }, [page, country]);
 
       const deleteCustomer = async (id, name) => {
         if (window.confirm(`Excluir ${name}?`)) {
@@ -47,7 +62,7 @@ const listUniversity = () => {
             .then(() => getData())
             .catch(e => console.log(e));
         }
-      }
+      };
 
       const countPage = (action) => {
         if (action === 'increase' && page < data.slice(-1)[0].from) {
@@ -55,7 +70,7 @@ const listUniversity = () => {
         } else if (action === 'decrease' && page > 1) {
           setPage(page - 1);
         }
-      }
+      };
 
   return (
       <div className="tableCustomer">
@@ -66,30 +81,29 @@ const listUniversity = () => {
         <h3>Lista de Universidades</h3>
 
         <FormControl sx={{ width: 300 }}>
-              <InputLabel id="demo-simple-select-label">Selecione o País</InputLabel>
-              <Select
-                labelId="demo-simple-select-label"
-                id="demo-simple-select"
-                value={country}
-                label="Forma de Pagamento"
-                onChange={e => setCountry(e.target.value)}>
+          <InputLabel id="demo-simple-select-label">Selecione o País</InputLabel>
+          <Select
+            labelId="demo-simple-select-label"
+            id="demo-simple-select"
+            value={country}
+            label="Forma de Pagamento"
+            onChange={e => {
+                setCountry(e.target.value);
+                setPage(1);
+              }}>
 
-                <MenuItem value={'Cartão de Crédito'}>Cartão de Crédito</MenuItem>
-                <MenuItem value={'Dinheiro'}>Dinheiro</MenuItem>
-                <MenuItem value={'Débito'}>Débito</MenuItem>
-                <MenuItem value={'Vale Alimentação'}>Vale Alimentação</MenuItem>
-                <MenuItem value={'Pix'}>Pix</MenuItem>
-                
-              </Select>
-            </FormControl>
+            { countries.map(item => 
+              <MenuItem value={item._id}>{item._id}</MenuItem>) }
+            
+          </Select>
+        </FormControl>
+        <button onClick={() => setCountry('')}>Listar todos</button>
 
+        <TextField id="txtSearch" label="Digite o nome da Universidade" variant="outlined" value={search} onChange={e => setSearch(e.target.value)} />
+        <button onClick={() => setCountry('')}>Buscar</button>
 
         <TableContainer component={Paper}>
           <Table sx={{ minWidth: 700 }} aria-label="customized table">
-
-
-
-            
               <TableHead>
               <TableRow>
                   <StyledTableCell align="center">ID</StyledTableCell>
