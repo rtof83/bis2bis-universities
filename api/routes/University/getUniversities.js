@@ -6,18 +6,18 @@ const getUniversities = express.Router();
 getUniversities.get('/', async (req, res) => {
   try {
     let universities;
+    let query = {};
 
-    if (req.query.country || req.query.page) {
-      const query = req.query.country ? { country: req.query.country } : null;
+    if (req.query.country || req.query.name || req.query.page) {
+
+      if (req.query.country) query.country = req.query.country;
+      if (req.query.name) query.name = { $regex: req.query.name, "$options": "i" };
 
       const perPage = 2;
       const total = await University.count(query);
       const pages = Math.ceil(total / perPage);
       const pageNumber = !req.query.page ? 1 : req.query.page;
       const startFrom = (pageNumber - 1) * perPage;
-
-      // GET universities by country and/or pagination
-      // universities = await University.find(query);
 
       if (pageNumber > 0 && pageNumber <= pages) {
         universities = await University.find(query)
