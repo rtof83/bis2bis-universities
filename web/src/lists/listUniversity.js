@@ -41,8 +41,7 @@ const listUniversity = () => {
 
       await api.get(query)
           .then(({ data }) => {
-            data.length === undefined ? setData([data]) :
-            setData(data);
+            data.length === undefined ? setData([data]) : setData(data);
             setLoading(false);
           })
           .catch(e => console.log(e));
@@ -69,7 +68,7 @@ const listUniversity = () => {
           await api.delete(`universities/${id}`)
             .then(() => getData())
             .catch(e => console.log(e));
-        }
+        };
       };
 
       const countPage = (action) => {
@@ -77,45 +76,54 @@ const listUniversity = () => {
           setPage(page + 1);
         } else if (action === 'decrease' && page > 1) {
           setPage(page - 1);
-        }
+        };
+      };
+
+      const setDefault = (e) => {
+        setPage(1);
+        setSearchByName('');
+        setSearchById('');
+        setCountry(e)
       };
 
   return (
       <div className="tableCustomer">
 
-        {/* { data.length === 0 ? <h3>Nenhum registro encontrado</h3> : <> */}
         { loading ? <h3><CircularProgress /></h3> : <>
 
         <h3>Lista de Universidades</h3>
 
-        <FormControl sx={{ width: 300 }}>
-          <InputLabel id="demo-simple-select-label">Selecione o País</InputLabel>
-          <Select
-            labelId="demo-simple-select-label"
-            id="demo-simple-select"
-            value={country}
-            label="Forma de Pagamento"
-            onChange={e => {
-                setCountry(e.target.value);
-                setPage(1);
-                setSearchByName('');
-                setSearchById('');
-              }}>
+        <FormControl sx={{ mx: 3, display: 'inline' }}>
+          <FormControl sx={{ mx: 1, width: 180 }}>
+            <InputLabel id="demo-simple-select-label">Selecione o País</InputLabel>
+            <Select
+              labelId="demo-simple-select-label"
+              id="demo-simple-select"
+              value={country}
+              label="Forma de Pagamento"
+              onChange={e => {
+                  setDefault(e.target.value);
+                }}>
 
-            { countries.map(item => 
-              <MenuItem value={item._id}>{item._id}</MenuItem>) }
+              { countries.map(item => 
+                <MenuItem value={item._id}>{item._id}</MenuItem>) }
+            </Select>
             
-          </Select>
+            <Button variant='outlined' onClick={() => setDefault()}>Listar todos</Button>
+          </FormControl>
+
+          <FormControl sx={{ width: 300, mx: 1 }}>
+            <TextField id="txtSearchByName" label="Digite o nome da Universidade" variant="outlined" value={searchByName} onChange={e => setSearchByName(e.target.value)} onKeyDown={e => e.key === 'Enter' && getData()} />
+            <Button variant='outlined' onClick={() => getData()}>Localizar por Nome</Button>
+          </FormControl>
+
+          <FormControl sx={{ width: 300, mx: 1 }}>
+            <TextField id="txtSearchByName" label="Digite o ID da Universidade" variant="outlined" value={searchById} onChange={e => setSearchById(e.target.value)} onKeyDown={e => e.key === 'Enter' && getData(searchById)} />
+            <Button variant='outlined' onClick={() => getData(searchById)}>Localizar por ID</Button>
+          </FormControl>
         </FormControl>
-        <button onClick={() => setCountry('')}>Listar todos</button>
 
-        <TextField id="txtSearchByName" label="Digite o nome da Universidade" variant="outlined" value={searchByName} onChange={e => setSearchByName(e.target.value)} onKeyDown={e => e.key === 'Enter' && getData()} />
-        <button onClick={() => getData()}>Buscar</button>
-
-        <TextField id="txtSearchByName" label="Digite o ID da Universidade" variant="outlined" value={searchById} onChange={e => setSearchById(e.target.value)} onKeyDown={e => e.key === 'Enter' && getData(searchById)} />
-        <button onClick={() => getData(searchById)}>Buscar</button>
-
-        <TableContainer component={Paper}>
+        <TableContainer sx={{ mt: 3 }} component={Paper}>
           <Table sx={{ minWidth: 700 }} aria-label="customized table">
               <TableHead>
               <TableRow>
@@ -128,33 +136,33 @@ const listUniversity = () => {
               </TableRow>
               </TableHead>
               <TableBody>
-              {data.map((item, index) => (
-                  <StyledTableRow key={item._id}>
-                  <StyledTableCell align="center" component="th" scope="row">
-                      {item._id}
-                  </StyledTableCell>
-                  <StyledTableCell align="left">{item.name}</StyledTableCell>
-                  <StyledTableCell align="center">{item.country}</StyledTableCell>
-                  <StyledTableCell align="left">{item['state-province']}</StyledTableCell>
-                  
-                  { index !== data.length-1 && data.length !== undefined ?
-                    <>
-                      <StyledTableCell align="right"><button onClick={() => navigate(`/university/${item._id}`)}>Alterar</button></StyledTableCell>
-                      <StyledTableCell align="right"><button onClick={() => deleteCustomer(item._id, item.name)}>Excluir</button></StyledTableCell>
-                    </>
-                   :
-                    <>
-                      <StyledTableCell colSpan={3} align="right">
-                        <button onClick={() => countPage('decrease')}>{'<'}</button>Página {item.page} de {item.from}
-                        <button onClick={() => countPage('increase')}>{'>'}</button>
-                      </StyledTableCell>
-                      {/* <StyledTableCell align="right">Página {item.page} de {item.from}</StyledTableCell> */}
-                      {/* <StyledTableCell align="right"><button>{'>>>'}</button></StyledTableCell> */}
-                    </>
-                  }
 
-                  </StyledTableRow>
-              ))}
+                { data && data.map((item, index) => (
+                    <StyledTableRow key={item._id}>
+                    <StyledTableCell align="center" component="th" scope="row">
+                        {item._id}
+                    </StyledTableCell>
+                    <StyledTableCell align="left">{item.name}</StyledTableCell>
+                    <StyledTableCell align="center">{item.country}</StyledTableCell>
+                    <StyledTableCell align="left">{item['state-province']}</StyledTableCell>
+                    
+                    { !item.page ?
+                      <>
+                        <StyledTableCell align="right"><button onClick={() => navigate(`/university/${item._id}`)}>Alterar</button></StyledTableCell>
+                        <StyledTableCell align="right"><button onClick={() => deleteCustomer(item._id, item.name)}>Excluir</button></StyledTableCell>
+                      </>
+                    :
+                      <>
+                        <StyledTableCell colSpan={3} align="right">
+                          <Button sx={{ mr: 1.5 }} variant="outlined" onClick={() => countPage('decrease')}>{'<'}</Button>Página {item.page} de {item.from}
+                          <Button sx={{ ml: 1.5 }} variant="outlined" onClick={() => countPage('increase')}>{'>'}</Button>
+                        </StyledTableCell>
+                      </>
+                    }
+
+                    </StyledTableRow>
+                ))}
+
               </TableBody>
           </Table>
         </TableContainer>
