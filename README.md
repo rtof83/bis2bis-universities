@@ -11,7 +11,7 @@
 &nbsp;
 
 ## [Estrutura da base de dados:](https://github.com/rtof83/bis2bis-universities/blob/main/api/models/University.js)
-- `Universidade (University):`
+- Universidade (University):
 
 ```javascript
 
@@ -75,23 +75,23 @@
 - [Collections Postman](https://github.com/rtof83/bis2bis-universities/blob/main/samples/universities.postman_collection.json);
 
 - Rotas de acesso (para os métodos GET, POST, DELETE E PUT):
-    - {baseURL}/universities -> retorna, cria, atualiza, exclui clientes;
+    - {baseURL}/universities -> retorna, cria, atualiza, exclui registros;
 
 - Rotas de acesso (para o método POST):
-    - {baseURL}/universities/create -> cria lista de universidade a partir da configuração inicial;
+    - {baseURL}/universities/create -> cria lista de universidades a partir da configuração inicial;
 
 - Rotas de busca:
     - {baseURL}/universities/:id -> retorna registro por ID;
-    - {baseURL}/universities?country={country} -> retorna registro por país;
-    - {baseURL}/universities?country={country}&name={name} -> retorna registro por país e nome;
-    - {baseURL}/universities?page={page}&country={country}&name={name} -> retorna registro por país, nome e paginação;
+    - {baseURL}/universities?country={country} -> retorna registros por país;
+    - {baseURL}/universities?country={country}&name={name} -> retorna registros por país e nome;
+    - {baseURL}/universities?page={page}&country={country}&name={name} -> retorna registros por país, nome e paginação;
 
 - Buscas:
     - retorna 20 registros por página;
 
     &nbsp;
 
-    #### exemplo de inserção de Universidade
+    #### exemplo de inserção ou atualização de Universidade
 
     ```javascript
 
@@ -108,8 +108,8 @@
 &nbsp;
 
 ### Implementações FRONT:
-- Criação de lista de universidades a partir de configuração inicial;
-- Cadastro, alteração e exclusão de Universidade;
+- Criação de lista de universidades a partir da configuração inicial;
+- Cadastro, alteração e exclusão de Universidades;
 - Lista Universidade;
 - Busca por ID;
 - Busca por Nome;
