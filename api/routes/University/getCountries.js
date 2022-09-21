@@ -1,5 +1,5 @@
-import express from 'express';
-import University from '../../models/University.js';
+const express = require('express');
+const University = require('../../models/University.js');
 
 const getCountries = express.Router();
 
@@ -18,4 +18,4 @@ getCountries.get('/countries', async (_, res) => {
   }
 });
 
-export default getCountries;
+module.exports = getCountries;

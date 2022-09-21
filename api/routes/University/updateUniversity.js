@@ -1,5 +1,5 @@
-import express from 'express';
-import University from '../../models/University.js';
+const express = require('express');
+const University = require('../../models/University.js');
 
 const updateUniversity = express.Router();
 
@@ -21,4 +21,4 @@ updateUniversity.put('/:id', async (req, res) => {
     }
 });
 
-export default updateUniversity;
+module.exports = updateUniversity;

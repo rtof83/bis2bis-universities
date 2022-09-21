@@ -1,4 +1,4 @@
-import mongoose from 'mongoose';
+const mongoose = require('mongoose');
 
 const University = mongoose.model('University', {
   alpha_two_code: String,
@@ -9,4 +9,4 @@ const University = mongoose.model('University', {
   'state-province': String
 });
 
-export default University;
+module.exports = University;

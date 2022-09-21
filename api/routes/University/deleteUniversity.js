@@ -1,5 +1,6 @@
-import express from 'express';
-import University from '../../models/University.js';
+const express = require('express');
+const University = require('../../models/University.js');
+
 
 const deleteUniversity = express.Router();
 
@@ -21,4 +22,4 @@ deleteUniversity.delete('/:id', async (req, res) => {
     }
 });
 
-export default deleteUniversity;
+module.exports = deleteUniversity;

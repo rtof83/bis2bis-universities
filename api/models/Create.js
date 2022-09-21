@@ -10,4 +10,4 @@ const Create = {
                  "uruguay" ]
 };
 
-export default Create;
+module.exports = Create;

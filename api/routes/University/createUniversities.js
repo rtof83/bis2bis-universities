@@ -1,7 +1,7 @@
-import express from 'express';
-import axios from 'axios';
-import University from '../../models/University.js';
-import Create from '../../models/Create.js';
+const express = require('express');
+const axios = require('axios');
+const University = require('../../models/University.js');
+const Create = require('../../models/Create.js');
 
 const createUniversities = express.Router();
 
@@ -21,4 +21,4 @@ createUniversities.post('/create', async (_, res) => {
   res.status(201).json({ message: 'Created!' });
 })
 
-export default createUniversities;
+module.exports = createUniversities;

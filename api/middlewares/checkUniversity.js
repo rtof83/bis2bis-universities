@@ -1,4 +1,4 @@
-import University from '../models/University.js';
+const University = require('../models/University.js');
 
 const checkUniversity = async (req, res, next) => {
   try {
@@ -14,4 +14,4 @@ const checkUniversity = async (req, res, next) => {
   }
 };
 
-export default checkUniversity;
+module.exports = checkUniversity;
