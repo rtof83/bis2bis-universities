@@ -1,31 +1,37 @@
-# Projeto Ecommerce
+# Projeto Universidades
 
 ## Foi utilizado para contrução:
 - API -> Node;
 - FRONT -> React;
 - DB -> MongoDB;
 - Ferramentas:
-    - Visual Studio Code 1.7.0.2;
+    - Visual Studio Code 1.71.2;
     - Console de Gerenciamento da AWS;
 
 &nbsp;
 
 ## Estrutura da base de dados:
-- [database.sql](https://github.com/rtof83/ecommerce-java-react/blob/main/samples/database.sql);
+- `Universidade (University):`
+    - `alpha_two_code: String`
+    - `web_pages: Array`
+    - `name: String`
+    - `country: String`
+    - `domains: Array`
+    - `state-province: String`
 
 &nbsp;
 
 ## Instalação
-- MySQL -> CREATE DATABASE database;
-- /api -> mvn clean package;
+- /api -> npm install;
 - /web -> npm install;
 
 &nbsp;
 
 ## Inicialização
-- /api -> java -jar target/springboot-store-backend-0.0.1-SNAPSHOT.jar;
+- /api -> npm start;
 - /web -> npm start;
-- porta padrão: 8080;
+- porta padrão API: 3001;
+- porta padrão WEB: 3000;
 - usuário padrão para acesso ao front:
     - email: admin;
     - password: admin;
@@ -33,102 +39,59 @@
 &nbsp;
 
 ## Configurações
-- [API - conexão com a base de dados](https://github.com/rtof83/ecommerce-java-react/blob/main/api/src/main/resources/application.properties);
-- [FRONT - conexão com a API](https://github.com/rtof83/ecommerce-java-react/blob/main/web/src/api.js);
+- [API - conexão com a base de dados](https://github.com/rtof83/bis2bis-universities/blob/main/api/database/conn.js);
+- [FRONT - conexão com a API](https://github.com/rtof83/bis2bis-universities/blob/main/web/src/api.js);
 
 &nbsp;
 
 ### a aplicação pode ser acessada através do link:
-- http://ecomm-teste2.s3-website-us-east-1.amazonaws.com
+- http://bis2bis-universities.s3-website-us-east-1.amazonaws.com
     - FRONT armazenado em instância Amazon S3;
-    - Banco de Dados instanciado no AWS RDS:
-        - database.c4gffxjofhme.us-east-1.rds.amazonaws.com:3306;
     - API instanciada em EC2 AWS:
-        - http://54.205.178.231:8080;
+        - http://34.235.154.60:3001;
 
 &nbsp;
 
 ### Implementações API:
-- [Collections Postman](https://github.com/rtof83/ecommerce-java-react/blob/main/samples/ecommerce.postman_collection.json);
+- [Collections Postman](https://github.com/rtof83/bis2bis-universities/blob/main/samples/universities.postman_collection.json);
 
 - Rotas de acesso (para os métodos GET, POST, DELETE E PUT):
-    - {baseURL}/api/customers -> retorna, cria, atualiza, exclui clientes;
-    - {baseURL}/api/products -> retorna, cria, atualiza, exclui produtos;
+    - {baseURL}/universities -> retorna, cria, atualiza, exclui clientes;
 
-- Rotas de acesso (para os métodos GET, POST E DELETE):
-    - {baseURL}/orders -> retorna, cria e exclui pedidos;
+- Rotas de acesso (para o método POST):
+    - {baseURL}/universities/create -> cria lista de universidade a partir da configuração inicial;
 
 - Rotas de busca:
-    - {baseURL}/api/{rota}/:id -> retorna registro por ID;
-    - {baseURL}/api/products/sku -> retorna produto por sku;
+    - {baseURL}/universities/:id -> retorna registro por ID;
+    - {baseURL}/universities?country={country} -> retorna registro por país;
+    - {baseURL}/universities?country={country}&name={name} -> retorna registro por país e nome;
+    - {baseURL}/universities?page={page}&country={country}&name={name} -> retorna registro por país, nome e paginação;
 
-- Inserção de pedidos:
-    - total do pedido e data e hora atual inseridos através da API;
-    - a quantidade de produtos é atualizada de forma automatizada (é verificado se a quantidade solicitada é igual ou menor que o estoque);
+- Buscas:
+    - retorna 20 registros por página;
 
     &nbsp;
 
-    #### exemplo de inserção de Clientes
+    #### exemplo de inserção de Universidade
 
     ```javascript
+
     {
-        "name": "Test Client",
-        "cpf": "99999999999",
-        "email": "client@test.com",
-        "address": "Test Street, 95",
-        "phone": "(99) 99999-9999",
-        "birth": "1999-01-01",
-        "password": "123"
+        "alpha_two_code": "BR",
+        "web_pages": ["page1@page.com", "page2@page.com"],
+        "name": "University",
+        "country": "Brazil",
+        "domains": ["uni.br", "uni.org"],
+        "state-province": "AA"
     }
     ```
 
-    #### exemplo de inserção de Produtos
-
-    ```javascript
-    {
-        "sku": "888",
-        "name": "Product Test",
-        "price": 99.9,
-        "quantity": 30
-    }
-    ```
-
-    #### exemplo de inserção de Pedidos
-
-    ```javascript
-    {
-        "customerId": 3,
-        "address": "Payment Street",
-        "payment": "pix",
-        "items": [
-            {
-                "quantity": 2,
-                "sku": "888"
-            },
-            {
-                "quantity": 2,
-                "sku": "999ab"
-            }
-        ]
-    }
-    ```
 &nbsp;
 
 ### Implementações FRONT:
-- Cadastro, alteração e exclusão de Cliente;
-- Cadastro, alteração e exclusão de Produto;
-- Lista Clientes;
-- Lista Produtos;
-- Lista Pedidos;
-- Carrinho;
-- Login;
-
-&nbsp;
-
-### Próximos passos:
-- Filtrar listagens;
-- Localizar registros por campo;
-- Utilizar localstorage (pedidos) concomitante ao ContextAPI;
-- Lista pedidos detalhada;
-- Validação dos campos;
-- Refatoração;
+- Criação de lista de universidades a partir de configuração inicial;
+- Cadastro, alteração e exclusão de Universidade;
+- Lista Universidade;
+- Busca por ID;
+- Busca por Nome;
+- Busca por País;
