@@ -77,8 +77,11 @@
 - Rotas de acesso (para os métodos GET, POST, DELETE E PUT):
     - {baseURL}/universities -> retorna, cria, atualiza, exclui registros;
 
-- Rotas de acesso (para o método POST):
+- Rota de acesso (para o método POST):
     - {baseURL}/universities/create -> cria lista de universidades a partir da configuração inicial;
+
+- Rotas de acesso (para o método GET):
+    - {baseURL}/universities/countries -> retorna lista de países das universidades cadastradas;
 
 - Rotas de busca:
     - {baseURL}/universities/:id -> retorna registro por ID;
