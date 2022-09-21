@@ -124,7 +124,7 @@ const listUniversity = () => {
         </FormControl>
 
         <TableContainer sx={{ mt: 3 }} component={Paper}>
-          <Table sx={{ minWidth: 700 }} aria-label="customized table">
+          <Table sx={{ minWidth: 800 }} aria-label="customized table">
               <TableHead>
               <TableRow>
                   <StyledTableCell align="center">ID</StyledTableCell>
@@ -137,32 +137,22 @@ const listUniversity = () => {
               </TableHead>
               <TableBody>
 
-                { data && data.map((item, index) => (
+                { data && data.map((item) => (
+                  !item.page ?
                     <StyledTableRow key={item._id}>
-                    <StyledTableCell align="center" component="th" scope="row">
-                        {item._id}
-                    </StyledTableCell>
-                    <StyledTableCell align="left">{item.name}</StyledTableCell>
-                    <StyledTableCell align="center">{item.country}</StyledTableCell>
-                    <StyledTableCell align="left">{item['state-province']}</StyledTableCell>
-                    
-                    { !item.page ?
-                      <>
-                        <StyledTableCell align="right"><button onClick={() => navigate(`/university/${item._id}`)}>Alterar</button></StyledTableCell>
-                        <StyledTableCell align="right"><button onClick={() => deleteCustomer(item._id, item.name)}>Excluir</button></StyledTableCell>
-                      </>
-                    :
-                      <>
-                        <StyledTableCell colSpan={3} align="right">
-                          <Button sx={{ mr: 1.5 }} variant="outlined" onClick={() => countPage('decrease')}>{'<'}</Button>Página {item.page} de {item.from}
-                          <Button sx={{ ml: 1.5 }} variant="outlined" onClick={() => countPage('increase')}>{'>'}</Button>
-                        </StyledTableCell>
-                      </>
-                    }
-
+                      <StyledTableCell align="center" component="th" scope="row">{item._id}</StyledTableCell>
+                      <StyledTableCell align="left">{item.name}</StyledTableCell>
+                      <StyledTableCell align="center">{item.country}</StyledTableCell>
+                      <StyledTableCell align="left">{item['state-province']}</StyledTableCell>
+                      <StyledTableCell align="right"><button onClick={() => navigate(`/university/${item._id}`)}>Alterar</button></StyledTableCell>
+                      <StyledTableCell align="right"><button onClick={() => deleteCustomer(item._id, item.name)}>Excluir</button></StyledTableCell>
                     </StyledTableRow>
+                  :
+                  <StyledTableCell colSpan={6} align="center">
+                    <Button sx={{ mr: 1.5 }} variant="outlined" onClick={() => countPage('decrease')}>{'<'}</Button>Página {item.page} de {item.from}
+                    <Button sx={{ ml: 1.5 }} variant="outlined" onClick={() => countPage('increase')}>{'>'}</Button>
+                  </StyledTableCell>
                 ))}
-
               </TableBody>
           </Table>
         </TableContainer>

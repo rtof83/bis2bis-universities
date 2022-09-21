@@ -1,51 +1,52 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import api from '../api';
-import UserContext from '../contexts/UserContext';
 
-import Box from '@mui/material/Box';
-import Grid from '@mui/material/Grid';
+import { Button } from '@mui/material';
 
 const Home = () => {
-    const [ data, setData ] = useState([]);
-    const [ user ] = useContext(UserContext);
+    const navigate = useNavigate();
+    const [ loading, setLoading ] = useState(false);
 
-    // const getProducts = async () => {
-    //     await api.get('products')
-    //         .then(({ data }) => {
-    //             setData(data)
-    //         })
-    //         .catch(e => console.log(e));
-    // }
+    const create = async () => {
+        if (window.confirm('As informações atuais do banco de dados serão substituídas. Deseja continuar?')) {
+            setLoading(true);
 
-    // useEffect(() => {
-    //     getProducts();
-    // }, []);
-
+            api.post('universities/create')
+                .then(() => {
+                    setLoading(false);
+                    navigate('/listUniversity');
+                })
+                .catch(e => console.log(e));
+        };
+    };
+    
     return (
-        <>
-            {/* <Carousel /> */}
-            
-            <div className="container text-center">    
-                <h3>Olá { user.name || `Visitante` }, faça seu pedido!</h3><br />
+        <div className="container text-center">
+            <h1>Configuração Inicial</h1>
 
-                {/* <Box sx={{ flexGrow: 1 }}>
-                    <Grid container spacing={{ xs: 2, md: 3 }} columns={{ xs: 4, sm: 8, md: 12 }}>
-                        { data.map((item, index) => (
-                        <Grid item xs={2} sm={4} md={4} key={index}>
-                            <CardFood sku={item.sku}
-                                      image={item.image}
-                                      name={item.name}
-                                      descr={item.descr}
-                                      price={item.price}
-                                      quantity={item.quantity} />
-                        </Grid>
-                        ))}
-                    </Grid>
-                </Box> */}
+            <h2>os seguintes países serão extraídos da API http://universities.hipolabs.com/search</h2>
 
+            <h3>
+                <ul>
+                    <li>Argentina</li>
+                    <li>Brasil</li>
+                    <li>Chile</li>
+                    <li>Colombia</li>
+                    <li>Paraguai</li>
+                    <li>Peru</li>
+                    <li>Suriname</li>
+                    <li>Uruguai</li>
+                </ul>
+            </h3>
+
+            <Button disabled={loading} onClick={() => create()} size='large' sx={{ mt: 5, mb: 2 }} variant="contained">{loading ? 'aguarde...' : 'Criar!'}</Button>
+            <div>
+                Atenção!<p/>
+                Ao clicar no botão os dados atuais serão substituídos pela configuração acima.
             </div>
-        </>
+        </div>
     )
-}
+};
 
 export default Home;
