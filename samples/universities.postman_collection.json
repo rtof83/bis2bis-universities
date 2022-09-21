@@ -1,0 +1,220 @@
+{
+	"info": {
+		"_postman_id": "c06fdd28-8253-4369-87e3-722254c7d6d3",
+		"name": "universities",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "17279479"
+	},
+	"item": [
+		{
+			"name": "CREATE universities from url",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:3001/universities/create",
+					"host": [
+						"localhost"
+					],
+					"port": "3001",
+					"path": [
+						"universities",
+						"create"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET ALL universities",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:3001/universities",
+					"host": [
+						"localhost"
+					],
+					"port": "3001",
+					"path": [
+						"universities"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "POST university",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"alpha_two_code\": \"BR\",\r\n    \"web_pages\": [\"page1@page.com\", \"page2@page.com\"],\r\n    \"name\": \"University\",\r\n    \"country\": \"Brazil\",\r\n    \"domains\": [\"uni.br\", \"uni.org\"],\r\n    \"state-province\": \"AA\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:3001/universities",
+					"host": [
+						"localhost"
+					],
+					"port": "3001",
+					"path": [
+						"universities"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET university by _id",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:3001/universities/632afd655fca114d6944f25a",
+					"host": [
+						"localhost"
+					],
+					"port": "3001",
+					"path": [
+						"universities",
+						"632afd655fca114d6944f25a"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET university by country",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:3001/universities?country=Brazil",
+					"host": [
+						"localhost"
+					],
+					"port": "3001",
+					"path": [
+						"universities"
+					],
+					"query": [
+						{
+							"key": "country",
+							"value": "Brazil"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET university by country and name",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:3001/universities?country=Brazil&name=federal",
+					"host": [
+						"localhost"
+					],
+					"port": "3001",
+					"path": [
+						"universities"
+					],
+					"query": [
+						{
+							"key": "country",
+							"value": "Brazil"
+						},
+						{
+							"key": "name",
+							"value": "federal"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "PUT university",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"alpha_two_code\": \"BR\",\r\n    \"web_pages\": [\"teste1\", \"teste2\"],\r\n    \"name\": \"testando update\",\r\n    \"country\": \"Brazil\",\r\n    \"domains\": [\"D1\", \"D2\"],\r\n    \"state-province\": \"state\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:3001/universities/6328f4020e93657cb280a24e",
+					"host": [
+						"localhost"
+					],
+					"port": "3001",
+					"path": [
+						"universities",
+						"6328f4020e93657cb280a24e"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "DELETE university",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "localhost:3001/universities/632af67e6afbeb7d6d02a581",
+					"host": [
+						"localhost"
+					],
+					"port": "3001",
+					"path": [
+						"universities",
+						"632af67e6afbeb7d6d02a581"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET countries list",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:3001/universities/countries",
+					"host": [
+						"localhost"
+					],
+					"port": "3001",
+					"path": [
+						"universities",
+						"countries"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
