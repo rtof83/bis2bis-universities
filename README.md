@@ -10,14 +10,36 @@
 
 &nbsp;
 
-## Estrutura da base de dados:
+## [Estrutura da base de dados:](https://github.com/rtof83/bis2bis-universities/blob/main/api/models/University.js)
 - `Universidade (University):`
-    - `alpha_two_code: String`
-    - `web_pages: Array`
-    - `name: String`
-    - `country: String`
-    - `domains: Array`
-    - `state-province: String`
+
+```javascript
+
+  alpha_two_code: String,
+  web_pages: Array,
+  name: String,
+  country: String,
+  domains: Array,
+  'state-province': String
+
+```
+
+&nbsp;
+
+## [Estrutura da configuração inicial:](https://github.com/rtof83/bis2bis-universities/blob/main/api/models/Create.js)
+
+```javascript
+
+    url: 'http://universities.hipolabs.com/search?country=',
+    countries: [ "argentina",
+                 "brazil",
+                 "chile",
+                 "colombia",
+                 "paraguay",
+                 "peru",
+                 "suriname",
+                 "uruguay" ]
+```
 
 &nbsp;
 
@@ -32,9 +54,6 @@
 - /web -> npm start;
 - porta padrão API: 3001;
 - porta padrão WEB: 3000;
-- usuário padrão para acesso ao front:
-    - email: admin;
-    - password: admin;
 
 &nbsp;
 
