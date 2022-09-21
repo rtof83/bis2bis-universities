@@ -10,39 +10,31 @@ import TextField from '@mui/material/TextField';
 const University = () => {
     const [ values, setValues ] = useState({ alphaTwoCode: '',
                                              country: '',
-                                             webPages: '',
-                                             domains: '',
+                                             name: '',
+                                             webPages: ['', ''],
+                                             domains: ['', ''],
                                              state: '' });
 
     const navigate = useNavigate();
     const { id } = useParams();
 
-    const insertCustomer = async () => {
-      if (!values.alphaTwoCode || !values.country) {
+    const insertUniversity = async () => {
+      if (!values.alphaTwoCode || !values.country || !values.name) {
         alert('Atenção! Os campos obrigatórios devem ser preenchidos.')
       } else {
-        if (!id) {
-          alert('Email existente na base de dados');
-        } else {
-          const university = { alpha_two_code: values.alphaTwoCode,
-                               web_pages: values.webPages,
-                               name: values.name,
-                               country: values.country,
-                               domains: values.domains,
-                               'state-province': values.state };
-                           
-          if (id) {
-            await api.put(`universities/${id}`, university)
-              .then(() => navigate('/listUniversity'))
-              .catch(e => console.log(e));
-          } else {
-            await api.post('universities', university)
-              .then(() => navigate('/listUniversity'))
-              .catch(e => console.log(e));
-          }
-        }
-      }
-    }
+        const university = { alpha_two_code: values.alphaTwoCode,
+                              web_pages: values.webPages,
+                              name: values.name,
+                              country: values.country,
+                              domains: values.domains,
+                              'state-province': values.state };
+                          
+        const query = id ? api.put(`universities/${id}`, university) : api.post('universities', university);
+        await query
+          .then(() => navigate('/listUniversity'))
+          .catch(e => console.log(e));
+        };
+    };
 
       const getUniversity = async () => {
         if (id) {
@@ -56,8 +48,8 @@ const University = () => {
                           state: data['state-province'] });
             })
             .catch(e => console.log(e));
-        }
-      }
+        };
+      };
 
       useEffect(() => {
         getUniversity();
@@ -80,8 +72,14 @@ const University = () => {
             { id && <TextField id="txtId" label="Id" variant="outlined" value={id} disabled /> }
             <TextField required id="txtAlphaTwoCode" label="Código do País" variant="outlined" value={values.alphaTwoCode} onChange={e => setValues({...values, alphaTwoCode: e.target.value})} />
             <TextField required id="txtCountry" label="País" variant="outlined" value={values.country} onChange={e => setValues({...values, country: e.target.value})} />
-            <TextField required id="txtWebPages" label="Páginas da web" variant="outlined" value={values.webPages} onChange={e => setValues({...values, webPages: e.target.value})} />
-            <TextField required id="txtDomains" label="Domínios" variant="outlined" value={values.domains} onChange={e => setValues({...values, domains: e.target.value})} />
+            <TextField required id="txtName" label="Nome" variant="outlined" value={values.name} onChange={e => setValues({...values, name: e.target.value})} />
+            
+            <TextField required id="txtWebPages1" label="Páginas da web 01" variant="outlined" value={values.webPages[0]} onChange={e => setValues({...values, webPages: [e.target.value, values.webPages[1]]})} />
+            <TextField required id="txtWebPages2" label="Páginas da web 02" variant="outlined" value={values.webPages[1]} onChange={e => setValues({...values, webPages: [values.webPages[0], e.target.value]})} />
+
+            <TextField required id="txtDomains1" label="Domínio 01" variant="outlined" value={values.domains[0]} onChange={e => setValues({...values, domains: [e.target.value, values.domains[1]]})} />
+            <TextField required id="txtDomains2" label="Domínio 02" variant="outlined" value={values.domains[1]} onChange={e => setValues({...values, domains: [values.domains[0], e.target.value]})} />
+            
             <TextField required id="txtState" label="Estado" variant="outlined" value={values.state} onChange={e => setValues({...values, state: e.target.value})} />
         </Grid>
 
@@ -92,7 +90,7 @@ const University = () => {
               alignItems="center"
               className="gridButton">
 
-          <Button onClick={() => insertCustomer()} variant="contained">Salvar</Button>
+          <Button onClick={() => insertUniversity()} variant="contained">Salvar</Button>
 
           <Link to={'/'}>
             <Button variant="contained">Cancelar</Button>

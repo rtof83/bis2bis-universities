@@ -27,15 +27,21 @@ const listUniversity = () => {
     const [ page, setPage ] = useState(1);
     const [ countries, setCountries ] = useState([]);
     const [ country, setCountry ] = useState('Brazil');
-    const [ search, setSearch ] = useState('');
+    const [ searchByName, setSearchByName ] = useState('');
+    const [ searchById, setSearchById ] = useState('');
 
-    const getData = async () => {
+    const getData = async (id) => {
       setLoading(true);
 
-      await api.get('universities?page=' + page +
-                    (country ? '&country=' + country : '') +
-                    (search ? '&name=' + search : ''))
+      const query = !id ? 'universities?page=' + page +
+                         (country ? '&country=' + country : '') +
+                         (searchByName ? '&name=' + searchByName : '')
+                        :
+                        'universities/' + id;
+
+      await api.get(query)
           .then(({ data }) => {
+            data.length === undefined ? setData([data]) :
             setData(data);
             setLoading(false);
           })
@@ -92,7 +98,8 @@ const listUniversity = () => {
             onChange={e => {
                 setCountry(e.target.value);
                 setPage(1);
-                setSearch('');
+                setSearchByName('');
+                setSearchById('');
               }}>
 
             { countries.map(item => 
@@ -102,8 +109,11 @@ const listUniversity = () => {
         </FormControl>
         <button onClick={() => setCountry('')}>Listar todos</button>
 
-        <TextField id="txtSearch" label="Digite o nome da Universidade" variant="outlined" value={search} onChange={e => setSearch(e.target.value)} onKeyDown={e => e.key === 'Enter' && getData()} />
+        <TextField id="txtSearchByName" label="Digite o nome da Universidade" variant="outlined" value={searchByName} onChange={e => setSearchByName(e.target.value)} onKeyDown={e => e.key === 'Enter' && getData()} />
         <button onClick={() => getData()}>Buscar</button>
+
+        <TextField id="txtSearchByName" label="Digite o ID da Universidade" variant="outlined" value={searchById} onChange={e => setSearchById(e.target.value)} onKeyDown={e => e.key === 'Enter' && getData(searchById)} />
+        <button onClick={() => getData(searchById)}>Buscar</button>
 
         <TableContainer component={Paper}>
           <Table sx={{ minWidth: 700 }} aria-label="customized table">
@@ -127,7 +137,7 @@ const listUniversity = () => {
                   <StyledTableCell align="center">{item.country}</StyledTableCell>
                   <StyledTableCell align="left">{item['state-province']}</StyledTableCell>
                   
-                  { index !== data.length-1 ?
+                  { index !== data.length-1 && data.length !== undefined ?
                     <>
                       <StyledTableCell align="right"><button onClick={() => navigate(`/university/${item._id}`)}>Alterar</button></StyledTableCell>
                       <StyledTableCell align="right"><button onClick={() => deleteCustomer(item._id, item.name)}>Excluir</button></StyledTableCell>

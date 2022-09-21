@@ -13,7 +13,7 @@ getUniversities.get('/', async (req, res) => {
       if (req.query.country) query.country = req.query.country;
       if (req.query.name) query.name = { $regex: req.query.name, "$options": "i" };
 
-      const perPage = 2;
+      const perPage = 20;
       const total = await University.count(query);
       const pages = Math.ceil(total / perPage);
       const pageNumber = !req.query.page ? 1 : req.query.page;
