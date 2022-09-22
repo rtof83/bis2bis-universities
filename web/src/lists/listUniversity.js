@@ -46,6 +46,7 @@ const listUniversity = () => {
           .catch(e => {
             console.log(e);
             if (e.response.status === 400) alert('ID inválido!');
+            if (e.response.status === 422) setData([]);
           });
     };
 
