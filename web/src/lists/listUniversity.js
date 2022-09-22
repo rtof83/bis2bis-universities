@@ -31,8 +31,6 @@ const listUniversity = () => {
     const [ searchById, setSearchById ] = useState('');
 
     const getData = async (id) => {
-      setLoading(true);
-
       const query = !id ? 'universities?page=' + page +
                          (country ? '&country=' + country : '') +
                          (searchByName ? '&name=' + searchByName : '')
@@ -41,10 +39,14 @@ const listUniversity = () => {
 
       await api.get(query)
           .then(({ data }) => {
+            setLoading(true);
             data.length === undefined ? setData([data]) : setData(data);
             setLoading(false);
           })
-          .catch(e => console.log(e));
+          .catch(e => {
+            console.log(e);
+            if (e.response.status === 400) alert('ID inválido!');
+          });
     };
 
     const getCountries = async () => {
