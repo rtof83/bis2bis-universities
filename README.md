@@ -99,7 +99,7 @@
     - [checkUniversity](https://github.com/rtof83/bis2bis-universities/blob/main/api/middlewares/checkUniversity.js) -> verifica se registro já existe ao tentar cadastrar (nome, país e estado);
 
 - Buscas:
-    - retorna 20 registros por página;
+    - retorna até 20 registros por página ([const perPage](https://github.com/rtof83/bis2bis-universities/blob/main/api/routes/University/getUniversities.js));
 
     &nbsp;
 
