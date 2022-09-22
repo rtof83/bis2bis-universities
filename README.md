@@ -93,10 +93,10 @@
         - {baseURL}/universities/{id} -> atualiza registro;
 
     - DELETE
-        - {baseURL}/universities/{id} -> excluir registro;
+        - {baseURL}/universities/{id} -> exclui registro;
 
 - Middlewares:
-    - [checkUniversity](https://github.com/rtof83/bis2bis-universities/blob/main/api/middlewares/checkUniversity.js) -> verifica se registro já existe ao tentar cadastrar (nome, país e estado)
+    - [checkUniversity](https://github.com/rtof83/bis2bis-universities/blob/main/api/middlewares/checkUniversity.js) -> verifica se registro já existe ao tentar cadastrar (nome, país e estado);
 
 - Buscas:
     - retorna 20 registros por página;
@@ -121,8 +121,9 @@
 
 ### Implementações FRONT:
 - Criação de lista de universidades a partir da configuração inicial;
-- Cadastro, alteração e exclusão de Universidades;
-- Lista Universidade;
+- Cadastro, alteração e exclusão de Universidade;
+- Lista Universidades;
 - Busca por ID;
 - Busca por Nome;
 - Busca por País;
+- Busca combinada;
