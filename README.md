@@ -74,20 +74,28 @@
 ### Implementações API:
 - [Collections Postman](https://github.com/rtof83/bis2bis-universities/blob/main/samples/universities.postman_collection.json);
 
-- Rotas de acesso (para os métodos GET, POST, DELETE E PUT):
-    - {baseURL}/universities -> retorna, cria, atualiza, exclui registros;
+- Rotas de acesso:
+    - POST
+        - {baseURL}/universities/create -> cria lista de universidades a partir da configuração inicial;
+        - {baseURL}/universities -> cadastra universidade;
 
-- Rota de acesso (para o método POST):
-    - {baseURL}/universities/create -> cria lista de universidades a partir da configuração inicial;
+    - GET
+        - {baseURL}/universities -> retorna todos os registros;
+        - {baseURL}/universities/{id} -> retorna registro por id;
+        - {baseURL}/universities?page={page} -> retorna registros por paginação;
+        - {baseURL}/universities?country={country} -> retorna registros por país;
+        - {baseURL}/universities?country={country}&name={name} -> retorna registros por país e nome;
+        - {baseURL}/universities?page={page}&country={country}&name={name} -> retorna registros por paginação, país e nome;
+        - {baseURL}/universities/countries -> lista todos os países das universidades cadastradas na base de dados;
 
-- Rotas de acesso (para o método GET):
-    - {baseURL}/universities/countries -> retorna lista de países das universidades cadastradas;
+    - PUT
+        - {baseURL}/universities/{id} -> atualiza registro;
 
-- Rotas de busca:
-    - {baseURL}/universities/:id -> retorna registro por ID;
-    - {baseURL}/universities?country={country} -> retorna registros por país;
-    - {baseURL}/universities?country={country}&name={name} -> retorna registros por país e nome;
-    - {baseURL}/universities?page={page}&country={country}&name={name} -> retorna registros por país, nome e paginação;
+    - DELETE
+        - {baseURL}/universities/{id} -> excluir registro;
+
+- Middlewares:
+    - [checkUniversity](https://github.com/rtof83/bis2bis-universities/blob/main/api/middlewares/checkUniversity.js) -> verifica se registro já existe ao tentar cadastrar (nome, país e estado)
 
 - Buscas:
     - retorna 20 registros por página;
