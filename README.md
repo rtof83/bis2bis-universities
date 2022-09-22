@@ -83,6 +83,7 @@
         - {baseURL}/universities -> retorna todos os registros;
         - {baseURL}/universities/{id} -> retorna registro por id;
         - {baseURL}/universities?page={page} -> retorna registros por paginação;
+        - {baseURL}/universities?name={name} -> retorna registros por nome;
         - {baseURL}/universities?country={country} -> retorna registros por país;
         - {baseURL}/universities?country={country}&name={name} -> retorna registros por país e nome;
         - {baseURL}/universities?page={page}&country={country}&name={name} -> retorna registros por paginação, país e nome;
