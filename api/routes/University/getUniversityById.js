@@ -1,8 +1,6 @@
-const express = require('express');
+const getUniversityById = require('express').Router();
 const mongoose = require('mongoose');
 const University = require('../../models/University.js');
-
-const getUniversityById = express.Router();
 
 getUniversityById.get('/:id', async (req, res) => {
   try {

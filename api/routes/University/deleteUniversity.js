@@ -1,7 +1,5 @@
-const express = require('express');
+const deleteUniversity = require('express').Router();
 const University = require('../../models/University.js');
-
-const deleteUniversity = express.Router();
 
 deleteUniversity.delete('/:id', async (req, res) => {
   const id = req.params.id;

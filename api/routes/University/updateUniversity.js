@@ -1,7 +1,5 @@
-const express = require('express');
+const updateUniversity = require('express').Router();
 const University = require('../../models/University.js');
-
-const updateUniversity = express.Router();
 
 updateUniversity.put('/:id', async (req, res) => {
   const id = req.params.id;

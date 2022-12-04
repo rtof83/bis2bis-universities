@@ -1,7 +1,5 @@
-const express = require('express');
+const getCountries = require('express').Router();
 const University = require('../../models/University.js');
-
-const getCountries = express.Router();
 
 getCountries.get('/countries', async (_, res) => {
   try {

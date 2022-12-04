@@ -1,9 +1,7 @@
-const express = require('express');
+const createUniversities = require('express').Router();
 const axios = require('axios');
 const University = require('../../models/University.js');
 const Create = require('../../models/Create.js');
-
-const createUniversities = express.Router();
 
 createUniversities.post('/create', async (_, res) => {
   await University.deleteMany();

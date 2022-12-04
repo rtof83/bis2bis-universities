@@ -1,7 +1,5 @@
-const express = require('express');
+const postUniversity = require('express').Router();
 const University = require('../../models/University.js');
-
-const postUniversity = express.Router();
 
 postUniversity.post('/', async (req, res) => {
   const university = req.body;

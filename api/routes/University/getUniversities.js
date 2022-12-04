@@ -1,9 +1,5 @@
-const express = require('express');
+const getUniversities = require('express').Router();
 const University = require('../../models/University.js');
-
-// require('dotenv').config();
-
-const getUniversities = express.Router();
 
 getUniversities.get('/', async (req, res) => {
   try {
