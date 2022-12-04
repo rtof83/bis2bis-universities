@@ -1,19 +1,14 @@
 const mongoose = require('mongoose');
 const express = require('express');
+require('dotenv').config();
 
-const DB_USER = '';
-const DB_PASS = '';
-const DB_CLUSTER = '';
-const DB_URL = '';
-const DB_NAME = '';
-
-const conn = `mongodb+srv://${DB_USER}:${DB_PASS}@${DB_CLUSTER}.${DB_URL}/${DB_NAME}?retryWrites=true&w=majority`;
+const conn = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@${process.env.DB_CLUSTER}.${process.env.DB_URL}/${process.env.DB_NAME}?retryWrites=true&w=majority`;
 
 const app = express();
 mongoose.connect(conn)
     .then(() => {
         console.log('DB connected...')
-        app.listen(3001)
+        app.listen(process.env.PORT)
     })
     .catch((err) => console.log(err));
 
