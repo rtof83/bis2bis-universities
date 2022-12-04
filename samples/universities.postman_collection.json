@@ -21,11 +21,11 @@
 					}
 				},
 				"url": {
-					"raw": "localhost:3001/universities/create",
+					"raw": "{{BASE_URL}}:{{PORT}}/universities/create",
 					"host": [
-						"localhost"
+						"{{BASE_URL}}"
 					],
-					"port": "3001",
+					"port": "{{PORT}}",
 					"path": [
 						"universities",
 						"create"
@@ -40,11 +40,11 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "localhost:3001/universities",
+					"raw": "{{BASE_URL}}:{{PORT}}/universities",
 					"host": [
-						"localhost"
+						"{{BASE_URL}}"
 					],
-					"port": "3001",
+					"port": "{{PORT}}",
 					"path": [
 						"universities"
 					]
@@ -59,7 +59,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"alpha_two_code\": \"BR\",\r\n    \"web_pages\": [\"page1@page.com\", \"page2@page.com\"],\r\n    \"name\": \"University\",\r\n    \"country\": \"Brazil\",\r\n    \"domains\": [\"uni.br\", \"uni.org\"],\r\n    \"state-province\": \"AA\"\r\n}",
+					"raw": "{\r\n    \"alpha_two_code\": \"BR\",\r\n    \"web_pages\": [\"page1@page.com\", \"page2@page.com\", \"000\"],\r\n    \"name\": \"University\",\r\n    \"country\": \"Teste\",\r\n    \"domains\": [\"uni.br\", \"uni.org\", \"dddd\"],\r\n    \"state-province\": \"AA\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -67,11 +67,11 @@
 					}
 				},
 				"url": {
-					"raw": "localhost:3001/universities",
+					"raw": "{{BASE_URL}}:{{PORT}}/universities",
 					"host": [
-						"localhost"
+						"{{BASE_URL}}"
 					],
-					"port": "3001",
+					"port": "{{PORT}}",
 					"path": [
 						"universities"
 					]
@@ -85,14 +85,14 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "localhost:3001/universities/632afd655fca114d6944f25a",
+					"raw": "{{BASE_URL}}:{{PORT}}/universities/632b6dc43e0f93a22cdf4ef6",
 					"host": [
-						"localhost"
+						"{{BASE_URL}}"
 					],
-					"port": "3001",
+					"port": "{{PORT}}",
 					"path": [
 						"universities",
-						"632afd655fca114d6944f25a"
+						"632b6dc43e0f93a22cdf4ef6"
 					]
 				}
 			},
@@ -104,11 +104,11 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "localhost:3001/universities?country=Brazil",
+					"raw": "{{BASE_URL}}:{{PORT}}/universities?country=Brazil",
 					"host": [
-						"localhost"
+						"{{BASE_URL}}"
 					],
-					"port": "3001",
+					"port": "{{PORT}}",
 					"path": [
 						"universities"
 					],
@@ -128,11 +128,11 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "localhost:3001/universities?page=1",
+					"raw": "{{BASE_URL}}:{{PORT}}/universities?page=1",
 					"host": [
-						"localhost"
+						"{{BASE_URL}}"
 					],
-					"port": "3001",
+					"port": "{{PORT}}",
 					"path": [
 						"universities"
 					],
@@ -152,11 +152,11 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "localhost:3001/universities?country=Brazil&name=federal",
+					"raw": "{{BASE_URL}}:{{PORT}}/universities?country=Brazil&name=federal",
 					"host": [
-						"localhost"
+						"{{BASE_URL}}"
 					],
-					"port": "3001",
+					"port": "{{PORT}}",
 					"path": [
 						"universities"
 					],
@@ -180,11 +180,11 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "localhost:3001/universities?page=1&country=Brazil&name=federal",
+					"raw": "{{BASE_URL}}:{{PORT}}/universities?page=1&country=Brazil&name=federal",
 					"host": [
-						"localhost"
+						"{{BASE_URL}}"
 					],
-					"port": "3001",
+					"port": "{{PORT}}",
 					"path": [
 						"universities"
 					],
@@ -221,11 +221,11 @@
 					}
 				},
 				"url": {
-					"raw": "localhost:3001/universities/6328f4020e93657cb280a24e",
+					"raw": "{{BASE_URL}}:{{PORT}}/universities/6328f4020e93657cb280a24e",
 					"host": [
-						"localhost"
+						"{{BASE_URL}}"
 					],
-					"port": "3001",
+					"port": "{{PORT}}",
 					"path": [
 						"universities",
 						"6328f4020e93657cb280a24e"
@@ -240,11 +240,11 @@
 				"method": "DELETE",
 				"header": [],
 				"url": {
-					"raw": "localhost:3001/universities/632af67e6afbeb7d6d02a581",
+					"raw": "{{BASE_URL}}:{{PORT}}/universities/632af67e6afbeb7d6d02a581",
 					"host": [
-						"localhost"
+						"{{BASE_URL}}"
 					],
-					"port": "3001",
+					"port": "{{PORT}}",
 					"path": [
 						"universities",
 						"632af67e6afbeb7d6d02a581"
@@ -259,11 +259,11 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "localhost:3001/universities/countries",
+					"raw": "{{BASE_URL}}:{{PORT}}/universities/countries",
 					"host": [
-						"localhost"
+						"{{BASE_URL}}"
 					],
-					"port": "3001",
+					"port": "{{PORT}}",
 					"path": [
 						"universities",
 						"countries"
@@ -278,11 +278,11 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "localhost:3001/universities?name=federal",
+					"raw": "{{BASE_URL}}:{{PORT}}/universities?name=federal",
 					"host": [
-						"localhost"
+						"{{BASE_URL}}"
 					],
-					"port": "3001",
+					"port": "{{PORT}}",
 					"path": [
 						"universities"
 					],
@@ -291,6 +291,24 @@
 							"key": "name",
 							"value": "federal"
 						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET config",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{BASE_URL}}:{{PORT}}/config",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"port": "{{PORT}}",
+					"path": [
+						"config"
 					]
 				}
 			},
