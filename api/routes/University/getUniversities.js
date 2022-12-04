@@ -32,12 +32,12 @@ getUniversities.get('/', async (req, res) => {
     } else {
       // GET ALL
       universities = await University.find();
-    }
+    };
 
     res.status(200).json(universities);
   } catch (error) {
     res.status(500).json({ erro: error });
-  }
-})
+  };
+});
 
 module.exports = getUniversities;

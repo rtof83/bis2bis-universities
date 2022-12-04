@@ -8,10 +8,11 @@ postUniversity.post('/', async (req, res) => {
   
   try {
     await University.create(university);
+
     res.status(201).json({ message: 'Record inserted successfully!' });
   } catch (error) {
     res.status(500).json({ erro: error });
-  }
-})
+  };
+});
 
 module.exports = postUniversity;
