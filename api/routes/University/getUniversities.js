@@ -1,6 +1,8 @@
 const express = require('express');
 const University = require('../../models/University.js');
 
+// require('dotenv').config();
+
 const getUniversities = express.Router();
 
 getUniversities.get('/', async (req, res) => {
@@ -13,7 +15,7 @@ getUniversities.get('/', async (req, res) => {
       if (req.query.country) query.country = req.query.country;
       if (req.query.name) query.name = { $regex: req.query.name, "$options": "i" };
 
-      const perPage = 20;
+      const perPage = parseInt(process.env.PER_PAGE);
       const total = await University.count(query);
       const pages = Math.ceil(total / perPage);
       const pageNumber = !req.query.page ? 1 : req.query.page;
