@@ -23,7 +23,7 @@ import TextField from '@mui/material/TextField';
 const listUniversity = () => {
     const navigate = useNavigate();
     const [ data, setData ] = useState([]);
-    const [ loading, setLoading ] = useState(false);
+    const [ loading, setLoading ] = useState(true);
     const [ page, setPage ] = useState(1);
     const [ countries, setCountries ] = useState([]);
     const [ country, setCountry ] = useState('Brazil');
@@ -31,6 +31,8 @@ const listUniversity = () => {
     const [ searchById, setSearchById ] = useState('');
 
     const getData = async (id) => {
+      setLoading(true);
+
       const query = !id ? 'universities?page=' + page +
                          (country ? '&country=' + country : '') +
                          (searchByName ? '&name=' + searchByName : '')
@@ -39,15 +41,14 @@ const listUniversity = () => {
 
       await api.get(query)
           .then(({ data }) => {
-            setLoading(true);
             data.length === undefined ? setData([data]) : setData(data);
-            setLoading(false);
           })
           .catch(e => {
             console.log(e);
-            if (e.response.status === 400) alert('ID inválido!');
-            if (e.response.status === 422) setData([]);
+            if (e.response.status === 400 || e.response.status === 422) setData([]);
           });
+          
+      setLoading(false);
     };
 
     const getCountries = async () => {
