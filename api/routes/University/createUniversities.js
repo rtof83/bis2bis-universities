@@ -16,9 +16,9 @@ createUniversities.post('/create', async (_, res) => {
               });
             })
             .catch(error => res.status(500).json({ erro: error }));
-  }
+  };
 
   res.status(201).json({ message: 'Created!' });
-})
+});
 
 module.exports = createUniversities;
