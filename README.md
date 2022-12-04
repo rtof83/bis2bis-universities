@@ -5,7 +5,7 @@
 - FRONT -> React;
 - DB -> MongoDB;
 - Ferramentas:
-    - Visual Studio Code 1.71.2;
+    - Visual Studio Code 1.73.1;
     - Console de Gerenciamento da AWS;
 
 &nbsp;
@@ -29,7 +29,7 @@
 ## [Estrutura da configuração inicial:](https://github.com/rtof83/bis2bis-universities/blob/main/api/models/Create.js)
 
 ```javascript
-
+{
     url: 'http://universities.hipolabs.com/search?country=',
     countries: [ "argentina",
                  "brazil",
@@ -39,6 +39,7 @@
                  "peru",
                  "suriname",
                  "uruguay" ]
+}
 ```
 
 &nbsp;
@@ -52,22 +53,36 @@
 ## Inicialização
 - /api -> npm start;
 - /web -> npm start;
-- porta padrão API: 3001;
+- porta padrão API: [configuração inicial .env](https://github.com/rtof83/bis2bis-universities/blob/main/api/.env.example);
 - porta padrão WEB: 3000;
+
+<!-- - a aplicação pode ser acessada através do link:
+  - http://bis2bis-universities.s3-website-us-east-1.amazonaws.com
+  - FRONT armazenado em instância Amazon S3;
+  - API instanciada em EC2 AWS:
+    - http://34.235.154.60:3001; -->
 
 &nbsp;
 
 ## Configurações
 - [API - conexão com a base de dados](https://github.com/rtof83/bis2bis-universities/blob/main/api/database/conn.js);
+
 - [FRONT - conexão com a API](https://github.com/rtof83/bis2bis-universities/blob/main/web/src/api.js);
 
-&nbsp;
+- [ENV - arquivo de configuração inicial](https://github.com/rtof83/bis2bis-universities/blob/main/api/.env.example) (deve ser renomeado para .env):
+  - exemplo de configuração:
 
-### a aplicação pode ser acessada através do link:
-- http://bis2bis-universities.s3-website-us-east-1.amazonaws.com
-    - FRONT armazenado em instância Amazon S3;
-    - API instanciada em EC2 AWS:
-        - http://34.235.154.60:3001;
+  ```javascript
+    DB_USER = user
+    DB_PASS = password
+    DB_CLUSTER = cluster
+    DB_URL = url.mongodb.net
+    DB_NAME = dbname
+
+    PORT = 3001
+
+    PER_PAGE = 20
+  ```
 
 &nbsp;
 
@@ -88,6 +103,7 @@
         - {baseURL}/universities?country={country}&name={name} -> retorna registros por país e nome;
         - {baseURL}/universities?page={page}&country={country}&name={name} -> retorna registros por paginação, país e nome;
         - {baseURL}/universities/countries -> lista todos os países das universidades cadastradas na base de dados;
+        - {baseURL}/config -> retorna url da api externa e lista de países a serem consultados;
 
     - PUT
         - {baseURL}/universities/{id} -> atualiza registro;
@@ -99,7 +115,7 @@
     - [checkUniversity](https://github.com/rtof83/bis2bis-universities/blob/main/api/middlewares/checkUniversity.js) -> verifica se registro já existe ao tentar cadastrar (nome, país e estado);
 
 - Buscas:
-    - retorna até 20 registros por página ([const perPage](https://github.com/rtof83/bis2bis-universities/blob/main/api/routes/University/getUniversities.js));
+    - retorna até XX registros por página ([.env -> PER_PAGE](https://github.com/rtof83/bis2bis-universities/blob/main/api/.env.example));
 
     &nbsp;
 
@@ -127,3 +143,8 @@
 - Busca por Nome;
 - Busca por País;
 - Busca combinada;
+
+<!-- &nbsp;
+
+### Próximos passos:
+-  -->
