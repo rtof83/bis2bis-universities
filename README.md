@@ -4,6 +4,7 @@
 - API -> Node;
 - FRONT -> React;
 - DB -> MongoDB;
+- Conteinerização -> Docker;
 - Ferramentas:
     - Visual Studio Code 1.73.1;
     - Console de Gerenciamento da AWS;
@@ -44,23 +45,31 @@
 
 &nbsp;
 
-## Instalação
-- /api -> npm install;
-- /web -> npm install;
+## Instalação e Inicialização
+- npm (/api):
+    - npm install;
+    - npm start;
 
-&nbsp;
+- npm (/web):
+    - npm install;
+    - npm start;
 
-## Inicialização
-- /api -> npm start;
-- /web -> npm start;
+- Docker (build /api e /web):
+    - docker build -t {imagem} .;
+    - docker run -p {porta}:{porta} -d {imagem};
+
+- Docker (compose):
+    - construção de ambos os projetos (/raiz):
+        - docker-compose up;
+
 - porta padrão API: [configuração inicial .env](https://github.com/rtof83/bis2bis-universities/blob/main/api/.env.example);
 - porta padrão WEB: 3000;
 
-<!-- - a aplicação pode ser acessada através do link:
-  - http://bis2bis-universities.s3-website-us-east-1.amazonaws.com
+- a aplicação pode ser acessada através do link:
+  - http://bis2bis-uni.s3-website-us-east-1.amazonaws.com
   - FRONT armazenado em instância Amazon S3;
   - API instanciada em EC2 AWS:
-    - http://34.235.154.60:3001; -->
+    - http://18.234.224.108:3001;
 
 &nbsp;
 
@@ -83,6 +92,62 @@
 
     PER_PAGE = 20
   ```
+
+- [Dockerfile (api)](https://github.com/rtof83/bis2bis-universities/blob/main/api/Dockerfile);
+
+    ``` javascript
+    FROM node:alpine
+
+    WORKDIR /app/universities-api
+
+    COPY ./package*.json ./
+
+    RUN npm install
+
+    COPY . .
+
+    EXPOSE 3001
+
+    CMD ["npm", "start"]
+    ```
+
+- [Dockerfile (web)](https://github.com/rtof83/bis2bis-universities/blob/main/web/Dockerfile);
+
+    ``` javascript
+    FROM node:16
+
+    WORKDIR /app/universities-web
+
+    COPY ./package*.json ./
+
+    RUN npm install
+
+    COPY . .
+
+    EXPOSE 3000
+
+    CMD ["npm", "start"]
+    ```
+
+- [docker-compose](https://bitbucket.org/recrutamento_jya_nodejs/recrutamento-conversor-nodejs-zuichuan_msn.com/src/master/docker-compose.yml);
+
+    ``` javascript
+    version: "3"
+
+    services:
+
+    dockerapi:
+        build: ./api
+        ports:
+        - "3001:3001"
+        
+    dockerweb:
+        build: ./web
+        ports:
+        - "3000:3000"
+    ```
+
+&nbsp;
 
 &nbsp;
 
@@ -122,7 +187,6 @@
     #### exemplo de inserção ou atualização de Universidade
 
     ```javascript
-
     {
         "alpha_two_code": "BR",
         "web_pages": ["page1@page.com", "page2@page.com"],
@@ -143,8 +207,3 @@
 - Busca por Nome;
 - Busca por País;
 - Busca combinada;
-
-<!-- &nbsp;
-
-### Próximos passos:
--  -->
