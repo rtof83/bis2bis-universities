@@ -1,5 +1,5 @@
 const getConfig = require('express').Router();
-const Create = require('../../models/Create.js');
+const Create = require('../models/Create.js');
 
 getConfig.get('/', (_, res) => {
     try {
