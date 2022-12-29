@@ -10,7 +10,7 @@ const checkUniversity = async (req, res, next) => {
       res.status(409).json({ message: 'Record already exist in database!' });
 
   } catch (error) {
-    res.status(500).json({ erro: error });
+    res.status(500).json({ error: error });
   }
 };
 
