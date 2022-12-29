@@ -1,4 +1,4 @@
-const app = require('../database/conn');
+const app = require('../app/server');
 const jwt = require('jsonwebtoken');
 
 const User = require('../models/User');
@@ -19,11 +19,11 @@ const login = (route) => {
       return res.json({ auth: true,
                         id: user.id,
                         name: user.name,
-                        // access: user.access,
+                        access: user.access,
                         exp: Math.floor(Date.now() / 1000) + (process.env.SECRET_TIMEOUT / 1000),
                         token });
     } catch (error) {
-      return res.status(500).json({ erro: error });
+      return res.status(500).json({ error: error });
     };
   });
 };
