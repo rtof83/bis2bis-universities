@@ -1,9 +1,8 @@
-const app = require('../database/conn');
-// const checkUser = require('../middlewares/checkUser');
+const app = require('../app/server');
+const checkUser = require('../middlewares/checkUser');
 
 const getAll = (route, model) => {
-//   app.get(route, checkUser, async (req, res) => {
-  app.get(route, async (req, res) => {
+  app.get(route, checkUser, async (req, res) => {
     try {
       let result;
       let query = {};
