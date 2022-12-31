@@ -1,37 +1,47 @@
-const createUniversities = require('express').Router();
+const app = require('../app/server');
 const axios = require('axios');
+const checkRoute = require('../middlewares/checkRoute');
 
 const University = require('../models/University.js');
-const Create = require('../models/Create.js');
+const Config = require('../models/Config.js');
 const Log = require('../models/Log.js');
 
-createUniversities.post('/create', async (_, res) => {
-  // create universities list
-  const urlList = [];
-  for (let i = 0; i < Create.countries.length; i++)
-    urlList.push(axios.get(Create.url + Create.countries[i]));
+const createUniversities = (route) => {
+  app.post(route, checkRoute, async (_, res) => {
+    try {
+      const create = await Config.findOne({}, { _id: 0, url: 1, countries: 1 });
 
-  await Promise.all(urlList)
-    .then(async (result) => {
-      // delete all universities
-      await University.deleteMany();
+      // create universities list
+      const urlList = [];
+      for (let i = 0; i < create.countries.length; i++)
+        urlList.push(axios.get(create.url + create.countries[i]));
 
-      // insert universities list
-      result.forEach(async uni => {
-        await University.create(uni.data);
-      });
+      await Promise.all(urlList)
+        .then(async result => {
+          // delete collection
+          await University.deleteMany();
 
-      // success log
-      await Log.create({ lastUpdate: new Date(), message: 'list updated successfully' });
+          // prepare universities list
+          const uniList = []; 
+          result.forEach(uni => {
+            uni.data.forEach(item => uniList.push(item))
+          });
 
-      res.status(201).json({ message: 'Created!' });
-    })
-    .catch(async (error) => {
-      //log error
-      await Log.create({ lastUpdate: new Date(), message: error });
+          // insert universities list
+          await University.insertMany(uniList);
 
-      res.status(500).json({ error: error });
-    });
-});
+          // success log
+          await Log.create({ lastUpdate: new Date(), message: 'list updated successfully' });
+
+          res.status(201).json({ message: 'Created!' });
+        });
+    } catch (error) {
+        //log error
+        await Log.create({ lastUpdate: new Date(), message: error.message });
+
+        res.status(500).json({ error: error.message });
+    };
+  });
+};
 
 module.exports = createUniversities;
