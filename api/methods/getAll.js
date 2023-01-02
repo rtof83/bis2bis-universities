@@ -1,8 +1,10 @@
 const app = require('../app/server');
-const checkUser = require('../middlewares/checkUser');
+const checkRoute = require('../middlewares/checkRoute');
+
+const Config = require('../models/Config');
 
 const getAll = (route, model) => {
-  app.get(route, checkUser, async (req, res) => {
+  app.get(route, checkRoute, async (req, res) => {
     try {
       let result;
       let query = {};
@@ -12,7 +14,9 @@ const getAll = (route, model) => {
         if (req.query.country) query.country = req.query.country;
         if (req.query.name) query.name = { $regex: req.query.name, "$options": "i" };
 
-        const perPage = parseInt(process.env.PER_PAGE);
+        const perPageConfig = await Config.find({}, { _id: 0, perPage: 1 });
+        
+        const perPage = perPageConfig[0].perPage;
         const total = await model.count(query);
         const pages = Math.ceil(total / perPage);
         const pageNumber = !req.query.page ? 1 : req.query.page;
@@ -35,7 +39,7 @@ const getAll = (route, model) => {
 
       return res.status(200).json(result);
     } catch (error) {
-      return res.status(500).json({ error: error });
+      return res.status(500).json({ error: error.message });
     }
   });
 };
