@@ -1,20 +1,21 @@
-const checkValidate = require('./checkValidate');
+const User = require('../models/User.js');
 
 const checkUser = async (req, res, next) => {
-  const pathId = req.path.substring(0, req.path.search('/'+req.params.id));
+  if (req.path === '/users') {
+    try {
+      const user = await User.findOne({ name: req.body.name });
 
-  if (req.path === '/users' || pathId === '/users') {
-    const { error, decoded } = checkValidate(req);
+      if (!user)
+        next();
+      else
+        res.status(409).json({ message: 'Record already exists in database!' });
 
-    if (error)
-      return res.status(401).json(error);
-    else if (req.path === '/users' && decoded.access !== 'admin')
-      return res.redirect(`users/${decoded.id}`);
-    else if (pathId === '/users' && decoded.access !== 'admin' && decoded.id !== req.params.id)
-      return res.status(401).json({ message: 'access only for admin' });
+    } catch (error) {
+      res.status(500).json({ error: error.message });
+    };
+  } else {
+    next();
   };
-
-  next();
 };
 
 module.exports = checkUser;
