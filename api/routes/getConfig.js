@@ -11,14 +11,14 @@ const getConfig = (route) => {
       // admin = full access | !admin = only url and countries
       const query = decoded && decoded.access === 'admin' ? {} : { _id: 0, url: 1, countries: 1 };
 
-      const config = await Config.find({}, query);
+      const config = await Config.findOne({}, query);
 
       if (!config)
         return res.status(422).json({ message: 'Record not found!' });
 
       res.status(200).json(config);
     } catch (error) {
-      res.status(500).json({ error: error });
+      res.status(500).json({ error: error.message });
     };
   });
 };

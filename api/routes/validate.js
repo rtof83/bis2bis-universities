@@ -9,7 +9,7 @@ const validate = (route) => {
       if (decoded) res.status(200).json(decoded);
 
     } catch (error) {
-      return res.status(500).json({ error: error });
+      return res.status(500).json({ error: error.message });
     };
   });
 };
