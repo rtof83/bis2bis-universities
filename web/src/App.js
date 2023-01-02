@@ -8,6 +8,7 @@ import NotFound from './pages/notFound';
 
 import ListUniversity from './lists/listUniversities';
 import ListUsers from './lists/listUsers';
+import ListLogs from './lists/listLogs';
 
 import Footer from './components/Footer';
 import Header from './components/Header';
@@ -34,9 +35,10 @@ const App = () => {
             { user.auth && <>
             <Route path='/user' element={<User />} />
             <Route path='/user/:id' element={<User />} />
+            <Route path='/listUsers' element={<ListUsers />} />
 
             <Route path='/config' element={<Config />} />
-            <Route path='/listUsers' element={<ListUsers />} />
+            <Route path='/listLogs' element={<ListLogs />} />
             
             <Route path='/university' element={<University />} />
             <Route path='/university/:id' element={<University />} />

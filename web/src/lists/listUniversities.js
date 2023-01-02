@@ -1,14 +1,13 @@
-import React, { useEffect, useState } from 'react';
-import api from '../api';
+import React, { useEffect, useState, useContext } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+
+import api from '../api';
+import { UserContext } from '../contexts/Contexts';
 
 import Grid from '@mui/material/Grid';
 import Button from '@mui/material/Button';
-
-import { styled } from '@mui/material/styles';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
-import TableCell, { tableCellClasses } from '@mui/material/TableCell';
 import { StyledTableCell, StyledTableRow } from '../components/StyledTable';
 import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
@@ -22,74 +21,76 @@ import MenuItem from '@mui/material/MenuItem';
 import TextField from '@mui/material/TextField';
 
 const listUniversities = () => {
-    const navigate = useNavigate();
-    const [ data, setData ] = useState([]);
-    const [ loading, setLoading ] = useState(true);
-    const [ page, setPage ] = useState(1);
-    const [ countries, setCountries ] = useState([]);
-    const [ country, setCountry ] = useState('Brazil');
-    const [ searchByName, setSearchByName ] = useState('');
-    const [ searchById, setSearchById ] = useState('');
+  const navigate = useNavigate();
+  const [ user ] = useContext(UserContext);
 
-    const getData = async (id) => {
-      setLoading(true);
+  const [ data, setData ] = useState([]);
+  const [ loading, setLoading ] = useState(true);
+  const [ page, setPage ] = useState(1);
+  const [ countries, setCountries ] = useState([]);
+  const [ country, setCountry ] = useState('');
+  const [ searchByName, setSearchByName ] = useState('');
+  const [ searchById, setSearchById ] = useState('');
 
-      const query = !id ? 'universities?page=' + page +
-                         (country ? '&country=' + country : '') +
-                         (searchByName ? '&name=' + searchByName : '')
-                        :
-                        'universities/' + id;
+  const getData = async (id) => {
+    setLoading(true);
 
-      await api.get(query)
-          .then(({ data }) => {
-            data.length === undefined ? setData([data]) : setData(data);
-          })
-          .catch(e => {
-            console.log(e);
-            if (e.response.status === 400 || e.response.status === 422) setData([]);
-          });
-          
-      setLoading(false);
-    };
+    const query = !id ? 'universities?page=' + page +
+                        (country ? '&country=' + country : '') +
+                        (searchByName ? '&name=' + searchByName : '')
+                      :
+                      'universities/' + id;
 
-    const getCountries = async () => {
-      await api.get(`countries`)
+    await api.get(query)
         .then(({ data }) => {
-          setCountries(data);
+          data.length === undefined ? setData([data]) : setData(data);
         })
-        .catch(e => console.log(e));
+        .catch(e => {
+          console.log(e);
+          if (e.response.status === 400 || e.response.status === 422) setData([]);
+        });
+        
+    setLoading(false);
+  };
+
+  const getCountries = async () => {
+    await api.get(`countries`)
+      .then(({ data }) => {
+        setCountries(data);
+      })
+      .catch(e => console.log(e));
+  };
+
+    useEffect(() => {
+      getCountries();
+    }, []);
+
+    useEffect(() => {
+      getData();
+    }, [page, country]);
+
+    const deleteCustomer = async (id, name) => {
+      if (window.confirm(`Excluir ${name}?`)) {
+        await api.delete(`universities/${id}`)
+          .then(() => getData())
+          .catch(e => console.log(e));
+      };
     };
 
-      useEffect(() => {
-        getCountries();
-      }, []);
-
-      useEffect(() => {
-        getData();
-      }, [page, country]);
-
-      const deleteCustomer = async (id, name) => {
-        if (window.confirm(`Excluir ${name}?`)) {
-          await api.delete(`universities/${id}`)
-            .then(() => getData())
-            .catch(e => console.log(e));
-        };
+    const countPage = (action) => {
+      if (action === 'increase' && page < data.slice(-1)[0].from) {
+        setPage(page + 1);
+      } else if (action === 'decrease' && page > 1) {
+        setPage(page - 1);
       };
+    };
 
-      const countPage = (action) => {
-        if (action === 'increase' && page < data.slice(-1)[0].from) {
-          setPage(page + 1);
-        } else if (action === 'decrease' && page > 1) {
-          setPage(page - 1);
-        };
-      };
-
-      const setDefault = (e) => {
-        setPage(1);
-        setSearchByName('');
-        setSearchById('');
-        setCountry(e)
-      };
+    const setDefault = (e) => {
+      setPage(1);
+      setSearchByName('');
+      setSearchById('');
+      setCountry(e);
+    };
 
   return (
       <div className="tableCustomer">
@@ -136,8 +137,10 @@ const listUniversities = () => {
                   <StyledTableCell align="left">Nome</StyledTableCell>
                   <StyledTableCell align="center">País</StyledTableCell>
                   <StyledTableCell align="left">Estado</StyledTableCell>
+                  { user.auth && <>
                   <StyledTableCell align="right" />
                   <StyledTableCell align="right" />
+                  </> }
               </TableRow>
               </TableHead>
               <TableBody>
@@ -149,9 +152,11 @@ const listUniversities = () => {
                       <StyledTableCell align="left">{item.name}</StyledTableCell>
                       <StyledTableCell align="center">{item.country}</StyledTableCell>
                       <StyledTableCell align="left">{item['state-province']}</StyledTableCell>
+                      { user.auth && <>
                       <StyledTableCell align="right"><button onClick={() => navigate(`/university/${item._id}`)}>Alterar</button></StyledTableCell>
-                      <StyledTableCell align="right"><button onClick={() => deleteCustomer(item._id, item.name)}>Excluir</button></StyledTableCell>
-                    </StyledTableRow>
+                      <StyledTableCell align="right"><button onClick={() => deleteCustomer(item._id, item.name)} disabled={user.access === 'user' ? true : false}>Excluir</button></StyledTableCell>
+                      </> }
+                      </StyledTableRow>
                   :
                   <StyledTableCell colSpan={6} align="center">
                     <Button sx={{ mr: 1.5 }} variant="outlined" onClick={() => countPage('decrease')}>{'<'}</Button>Página {item.page} de {item.from}

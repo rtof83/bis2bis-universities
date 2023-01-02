@@ -19,12 +19,10 @@ const Header = () => {
         <nav className="navbar navbar-inverse">
             <div className="container-fluid">
                 <div className="navbar-header">
-
-                {/* title */}
-                <Link to={'/'}>
-                    <div className="navbar-brand">Universities App</div>
-                </Link>
-
+                    {/* title */}
+                    <Link to={'/'}>
+                        <div className="navbar-brand">Universities App</div>
+                    </Link>
                 </div>
                 
                 <div className="collapse navbar-collapse" id="myNavbar">
@@ -35,17 +33,14 @@ const Header = () => {
                     <li><Link to={'/listUniversity'}>Lista Universidades</Link></li>
 
                     { user.auth && <>
-                    { user.access === 'admin' && <>
-                        <li><Link to={'/user'}>Usuários</Link></li>
-                        <li><Link to={'/config'}>Configurações</Link></li>
-                    </>}
+                        { user.access === 'admin' && <>
+                            <li><Link to={'/user'}>Usuários</Link></li>
+                            <li><Link to={'/config'}>Configurações</Link></li>
+                            <li><Link to={'/listLogs'}>Lista Logs</Link></li>
+                        </>}
 
-
-                    <li><Link to={'/university'}>Universidades</Link></li>
-                    {/* <li><Link to={'/listCars'}>Lista Veículos</Link></li> */}
-                    {/* <li><Link to={'/listBrands'}>Lista Marcas</Link></li> */}
-                    {/* <li><Link to={'/listStores'}>Lista Lojas</Link></li> */}
-                    <li><Link to={'/listUsers'}>Lista Usuários</Link></li>
+                        <li><Link to={'/university'}>Universidades</Link></li>
+                        <li><Link to={'/listUsers'}>Lista Usuários</Link></li>
                     </>}
                     
                 </ul>

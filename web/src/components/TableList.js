@@ -36,18 +36,18 @@ const TableList = ( listName,
   }, []);
 
   // format specific cells
-  const checkCell = (item, cell) => {
-    if (cell.field === 'list') {
-      return item.list.map(i =>
-          <div id={i.id}>{`${i.quantity} x ${i.product}`}</div>);
+  // const checkCell = (item, cell) => {
+  //   if (cell.field === 'list') {
+  //     return item.list.map(i =>
+  //         <div id={i.id}>{`${i.quantity} x ${i.product}`}</div>);
 
-    } else if (cell.field === 'total' || cell.field === 'price') {
-      return 'R$ ' + parseFloat(item[cell.field]).toFixed(2);
+  //   } else if (cell.field === 'total' || cell.field === 'price') {
+  //     return 'R$ ' + parseFloat(item[cell.field]).toFixed(2);
 
-    } else {
-      return item[cell.field];
-    };
-  };
+  //   } else {
+  //     return item[cell.field];
+  //   };
+  // };
 
   return (
       <div className="tableCustomer">
@@ -74,10 +74,7 @@ const TableList = ( listName,
                   {tableCell.map(head => 
                       <StyledTableCell align={head.align}>{head.fieldName}</StyledTableCell>)}
 
-                  {/* render update button path exist */}
-                  {/* { path !== 'order' && <StyledTableCell align="right" /> } */}
                   <StyledTableCell align="right" />
-
                   <StyledTableCell align="right" />
               </TableRow>
             </TableHead>
@@ -89,12 +86,10 @@ const TableList = ( listName,
 
                     { tableCell.map(cell =>
                       <StyledTableCell align={cell.align}>
-                        {checkCell(item, cell)}
+                        {/* {checkCell(item, cell)} */}
+                        {item[cell.field]}
                       </StyledTableCell>)
                     }
-
-                    {/* render update button path exist */}
-                    {/* { path !== 'order' && <StyledTableCell align="right"><button onClick={() => navigate(`/${path}/${path === 'product' ? item.sku : item.id}`)}>Alterar</button></StyledTableCell> } */}
 
                     <StyledTableCell align="right"><button disabled={checkAcess} onClick={() => navigate(`/${path}/${item._id}`)}>Alterar</button></StyledTableCell>
                     <StyledTableCell align="right"><button disabled={checkAcess} onClick={() => deleteRecord(item._id, item.name, api, getData, path)}>Excluir</button></StyledTableCell>

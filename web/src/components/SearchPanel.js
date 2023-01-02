@@ -11,7 +11,7 @@ const SearchPanel = (searchById, searchByName, setSearch, setSearchById, setSear
     return (
         <FormControl sx={{ mx: 7, display: 'inline' }}>
             <FormControl sx={{ width: 300, mx: 1 }}>
-                <TextField type="number" id="txtSearchById" label={`Digite o ${searchContext.id}`} variant="outlined" value={searchById} onChange={e => setSearchById(e.target.value)} onKeyDown={e => e.key === 'Enter' && searchById && setSearch(searchById)} />
+                <TextField id="txtSearchById" label={`Digite o ${searchContext.id}`} variant="outlined" value={searchById} onChange={e => setSearchById(e.target.value)} onKeyDown={e => e.key === 'Enter' && searchById && setSearch(searchById)} />
                 <Button variant='outlined' onClick={() => searchById && setSearch(searchById)}>{`Localizar por ${searchContext.id}`}</Button>
             </FormControl>
 

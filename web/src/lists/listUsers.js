@@ -1,8 +1,10 @@
 import React, { useEffect, useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { SearchContext } from '../contexts/Contexts';
-import TableList from '../components/TableList';
+
 import api from '../api';
+import SnackBars from '../components/SnackBars';
+import TableList from '../components/TableList';
 
 const ListUsers = () => {
   const navigate = useNavigate();
@@ -14,6 +16,15 @@ const ListUsers = () => {
   const [ searchById, setSearchById ] = useState('');
   const [ searchByName, setSearchByName ] = useState('');
   const [ page, setPage ] = useState(1);
+  const [ open, setOpen ] = useState(false);
+  const [ severity, setSeverity ] = useState('info');
+  const [ message, setMessage ] = useState('message');
+
+  const alertClick = (severity, message) => {
+    setSeverity(severity);
+    setMessage(message);
+    setOpen(true);
+  };
 
   const getData = async () => {
     setLoading(true);
@@ -24,7 +35,7 @@ const ListUsers = () => {
         data.length === undefined ? setData([data]) : setData(data);
       })
       .catch(e => {
-        console.log(e);
+        alertClick('error', e.message)
         if (e.response.status === 400 || e.response.status === 422) setData([]);
       });
 
@@ -69,6 +80,9 @@ const ListUsers = () => {
                    page, setPage,
                    navigate, 'user' )
       }
+
+      {SnackBars(open, setOpen, severity, message)}
+
     </>
   );
 };
