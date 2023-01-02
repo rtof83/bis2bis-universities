@@ -8,9 +8,9 @@ const initialConfig = async () => {
       await Config.create({ url: process.env.URL_CONFIG,
                             countries: process.env.COUNTRIES_CONFIG.split(", "),
                             perPage: process.env.PER_PAGE,
-                            updateHour: process.env.UPDATE_HOUR,
-                            secret: process.env.SECRET,
-                            secretTimeOut: process.env.SECRET_TIMEOUT });
+                            timeOut: process.env.SECRET_TIMEOUT });
+
+      console.log('initial config created...');
     };
   } catch (error) {
     console.log(error);

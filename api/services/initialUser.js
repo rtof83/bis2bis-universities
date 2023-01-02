@@ -8,7 +8,10 @@ const initialUser = async () => {
       await User.create({ name: 'admin',
                           email: 'admin@admin.com',
                           password: 'admin',
-                          access: 'admin' });
+                          access: 'admin' })
+                          
+        .then(() => console.log('initial user created...'))
+        .catch((error) => console.log(error));
     };
   } catch (error) {
     console.log(error);
