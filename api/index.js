@@ -1,23 +1,25 @@
 const app = require('./app/server');
 
-// environment variables
+// ====== environment variables ======
 require('dotenv').config();
 
-// database
+
+// ============ database ============
 require('./database/conn');
 
 
 // ========= initial configs =========
 require('./services/initialConfig')();
 require('./services/initialUser')();
-require('./services/updateHour.js')();
+require('./services/initialGroup')();
+require('./services/initialUniversities')();
 require('./services/updateHour')();
 
 
 // ========= standard routes =========
 const models = require('./models');
 const methods = require('./methods');
-const routes = [ '/universities', '/users' ];
+const routes = [ '/universities', '/users', '/groups' ];
 
 for (let i = 0; i < routes.length; i++) {
   // for each standard method
@@ -35,11 +37,21 @@ require('./routes/login')('/login');
 // validate access
 require('./routes/validate')('/validate');
 
+// create universities list
+require('./routes/postUniversities')('/create');
+
 // get countries
 require('./routes/getCountries.js')('/countries');
 
-// get countries
+// get config
 require('./routes/getConfig.js')('/config');
+
+// update config
+require('./routes/updateConfig.js')('/config/:id');
+
+// get and delete log
+require('./routes/getLog')('/log');
+require('./routes/deleteLog')('/log');
 
 
 // ========== listening ==========
