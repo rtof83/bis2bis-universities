@@ -1,8 +1,8 @@
-const app = require('../app/server');
+const app = require('../../app/server');
 const jwt = require('jsonwebtoken');
 
-const User = require('../models/User');
-const Config = require('../models/Config');
+const User = require('../../models/User');
+const Config = require('../../models/Config');
 
 const login = (route) => {
   return (

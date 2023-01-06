@@ -1,8 +1,8 @@
-const app = require('../app/server');
+const app = require('../../app/server');
 const mongoose = require('mongoose');
-const checkRoute = require('../middlewares/checkRoute');
+const checkRoute = require('../../middlewares/checkRoute');
 
-const Config = require('../models/Config');
+const Config = require('../../models/Config');
 
 const updateConfig = (route) => {
   return (

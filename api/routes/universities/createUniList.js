@@ -1,7 +1,7 @@
-const app = require('../app/server');
-const checkValidate = require('../middlewares/checkValidate');
+const app = require('../../app/server');
+const checkValidate = require('../../middlewares/checkValidate');
 
-const createUniversities = require('../services/createUniversities');
+const createUniversities = require('../../services/createUniversities');
 
 const postUniversities = (route) => {
   app.post(route, async (req, res) => {

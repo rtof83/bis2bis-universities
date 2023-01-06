@@ -1,6 +1,6 @@
-const app = require('../app/server');
+const app = require('../../app/server');
 
-const University = require('../models/University.js');
+const University = require('../../models/University.js');
 
 const getCountries = (route) => {
   return (

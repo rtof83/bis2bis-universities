@@ -1,7 +1,7 @@
-const app = require('../app/server');
-const checkValidate = require('../middlewares/checkValidate');
+const app = require('../../app/server');
+const checkValidate = require('../../middlewares/checkValidate');
 
-const Config = require('../models/Config.js');
+const Config = require('../../models/Config.js');
 
 const getConfig = (route) => {
   return (
@@ -15,7 +15,7 @@ const getConfig = (route) => {
         const config = await Config.findOne({}, query);
 
         if (!config)
-          return res.status(422).json({ message: 'Record not found!' });
+          return res.status(404).json({ message: 'Record not found!' });
 
         res.status(200).json(config);
       } catch (error) {

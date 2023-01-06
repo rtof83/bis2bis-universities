@@ -1,7 +1,7 @@
-const app = require('../app/server');
-const checkValidate = require('../middlewares/checkValidate');
+const app = require('../../app/server');
+const checkValidate = require('../../middlewares/checkValidate');
 
-const Log = require('../models/Log.js');
+const Log = require('../../models/Log.js');
 
 const getLog = (route) => {
   return (

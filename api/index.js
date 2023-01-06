@@ -1,5 +1,3 @@
-const app = require('./app/server');
-
 // ====== environment variables ======
 require('dotenv').config();
 
@@ -32,28 +30,23 @@ for (let i = 0; i < routes.length; i++) {
 // ========== custom routes ==========
 
 // login to sign token
-require('./routes/login')('/login');
+require('./routes/login/login')('/login');
 
 // validate access
-require('./routes/validate')('/validate');
+require('./routes/login/validate')('/validate');
 
 // create universities list
-require('./routes/postUniversities')('/create');
+require('./routes/universities/createUniList')('/create');
 
 // get countries
-require('./routes/getCountries.js')('/countries');
+require('./routes/universities/getCountries')('/countries');
 
 // get config
-require('./routes/getConfig.js')('/config');
+require('./routes/config/getConfig.js')('/config');
 
 // update config
-require('./routes/updateConfig.js')('/config/:id');
+require('./routes/config/updateConfig.js')('/config/:id');
 
 // get and delete log
-require('./routes/getLog')('/log');
-require('./routes/deleteLog')('/log');
-
-
-// ========== listening ==========
-app.listen(process.env.PORT, () => 
-    console.log(`server listening on port ${process.env.PORT}...`));
+require('./routes/log/getLog')('/log');
+require('./routes/log/deleteLog')('/log');
