@@ -8,7 +8,7 @@ const initialConfig = async () => {
       await Config.create({ url: process.env.URL_CONFIG,
                             countries: process.env.COUNTRIES_CONFIG.split(", "),
                             perPage: process.env.PER_PAGE,
-                            timeOut: process.env.SECRET_TIMEOUT });
+                            timeOut: process.env.TIMEOUT });
 
       console.log('initial config created...');
     };
