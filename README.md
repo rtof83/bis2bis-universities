@@ -2,31 +2,18 @@
 
 ## O projeto tem como objetivo varrer uma API externa para obter uma lista de universidades contidas em cada país previamente informados nas configurações iniciais.
 
----
+&nbsp;
 
 ## Foi utilizado para contrução:
-- API:
-  - Node;
-
-- FRONT:
-  - React;
-
-- DB:
-  - MongoDB;
-
-- Conteinerização:
-  - Docker;
-
-- Autenticação:
-  - JWT;
-
-- Testes:
-  - Jest;
-
+- API -> Node;
+- FRONT -> React;
+- DB -> MongoDB;
+- Conteinerização -> Docker;
+- Autenticação -> JWT;
+- Testes -> Jest;
 - Ferramentas:
     - Visual Studio Code 1.74.2;
     - Console de Gerenciamento da AWS;
-
 
 ---
 <!-- &nbsp; -->
@@ -56,6 +43,12 @@
 - porta padrão API: [configuração inicial .env](https://github.com/rtof83/bis2bis-universities/blob/main/api/.env.example);
 
 - porta padrão WEB: 3000;
+
+- usuário padrão:
+  ```JavaScript
+  user: admin
+  password: admin
+  ```
 
 &nbsp;
 
