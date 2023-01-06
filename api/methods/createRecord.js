@@ -4,15 +4,17 @@ const checkUniversity = require('../middlewares/checkUniversity');
 const checkUser = require('../middlewares/checkUser');
 
 const createRecord = (route, model) => {
-  app.post(route, [ checkRoute, checkUniversity, checkUser ], async (req, res) => {
-    try {
-      await model.create(req.body);
+  return (
+    app.post(route, [ checkRoute, checkUniversity, checkUser ], async (req, res) => {
+      try {
+        await model.create(req.body);
 
-      res.status(201).json({ message: 'Record inserted successfully!' });
-    } catch (error) {
-      res.status(500).json({ error: error.message });
-    };
-  });
+        res.status(201).json({ message: 'Record inserted successfully!' });
+      } catch (error) {
+        res.status(500).json({ error: error.message });
+      };
+    })
+  );
 };
 
 module.exports = createRecord;
