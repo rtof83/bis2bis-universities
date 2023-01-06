@@ -1,318 +1,775 @@
 {
 	"info": {
 		"_postman_id": "c06fdd28-8253-4369-87e3-722254c7d6d3",
-		"name": "universities",
+		"name": "bis2bis-universities",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "17279479"
 	},
 	"item": [
 		{
-			"name": "CREATE universities from url",
-			"request": {
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "{{BASE_URL}}:{{PORT}}/universities/create",
-					"host": [
-						"{{BASE_URL}}"
-					],
-					"port": "{{PORT}}",
-					"path": [
-						"universities",
-						"create"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "GET ALL universities",
-			"request": {
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "{{BASE_URL}}:{{PORT}}/universities",
-					"host": [
-						"{{BASE_URL}}"
-					],
-					"port": "{{PORT}}",
-					"path": [
-						"universities"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "POST university",
-			"request": {
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n    \"alpha_two_code\": \"BR\",\r\n    \"web_pages\": [\"page1@page.com\", \"page2@page.com\", \"000\"],\r\n    \"name\": \"University\",\r\n    \"country\": \"Teste\",\r\n    \"domains\": [\"uni.br\", \"uni.org\", \"dddd\"],\r\n    \"state-province\": \"AA\"\r\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "{{BASE_URL}}:{{PORT}}/universities",
-					"host": [
-						"{{BASE_URL}}"
-					],
-					"port": "{{PORT}}",
-					"path": [
-						"universities"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "GET university by _id",
-			"request": {
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "{{BASE_URL}}:{{PORT}}/universities/632b6dc43e0f93a22cdf4ef6",
-					"host": [
-						"{{BASE_URL}}"
-					],
-					"port": "{{PORT}}",
-					"path": [
-						"universities",
-						"632b6dc43e0f93a22cdf4ef6"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "GET university by country",
-			"request": {
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "{{BASE_URL}}:{{PORT}}/universities?country=Brazil",
-					"host": [
-						"{{BASE_URL}}"
-					],
-					"port": "{{PORT}}",
-					"path": [
-						"universities"
-					],
-					"query": [
-						{
-							"key": "country",
-							"value": "Brazil"
-						}
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "GET university by pagination",
-			"request": {
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "{{BASE_URL}}:{{PORT}}/universities?page=1",
-					"host": [
-						"{{BASE_URL}}"
-					],
-					"port": "{{PORT}}",
-					"path": [
-						"universities"
-					],
-					"query": [
-						{
-							"key": "page",
-							"value": "1"
-						}
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "GET university by country and name",
-			"request": {
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "{{BASE_URL}}:{{PORT}}/universities?country=Brazil&name=federal",
-					"host": [
-						"{{BASE_URL}}"
-					],
-					"port": "{{PORT}}",
-					"path": [
-						"universities"
-					],
-					"query": [
-						{
-							"key": "country",
-							"value": "Brazil"
+			"name": "universities",
+			"item": [
+				{
+					"name": "CREATE universities list",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{TOKEN_ADMIN}}",
+									"type": "string"
+								}
+							]
 						},
-						{
-							"key": "name",
-							"value": "federal"
-						}
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "GET university by page, country and name",
-			"request": {
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "{{BASE_URL}}:{{PORT}}/universities?page=1&country=Brazil&name=federal",
-					"host": [
-						"{{BASE_URL}}"
-					],
-					"port": "{{PORT}}",
-					"path": [
-						"universities"
-					],
-					"query": [
-						{
-							"key": "page",
-							"value": "1"
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
 						},
-						{
-							"key": "country",
-							"value": "Brazil"
-						},
-						{
-							"key": "name",
-							"value": "federal"
+						"url": {
+							"raw": "{{BASE_URL}}:{{PORT}}/create",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"port": "{{PORT}}",
+							"path": [
+								"create"
+							]
 						}
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "PUT university",
-			"request": {
-				"method": "PUT",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n    \"alpha_two_code\": \"BR\",\r\n    \"web_pages\": [\"teste1\", \"teste2\"],\r\n    \"name\": \"testando update\",\r\n    \"country\": \"Brazil\",\r\n    \"domains\": [\"D1\", \"D2\"],\r\n    \"state-province\": \"state\"\r\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
+					},
+					"response": []
 				},
-				"url": {
-					"raw": "{{BASE_URL}}:{{PORT}}/universities/6328f4020e93657cb280a24e",
-					"host": [
-						"{{BASE_URL}}"
-					],
-					"port": "{{PORT}}",
-					"path": [
-						"universities",
-						"6328f4020e93657cb280a24e"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "DELETE university",
-			"request": {
-				"method": "DELETE",
-				"header": [],
-				"url": {
-					"raw": "{{BASE_URL}}:{{PORT}}/universities/632af67e6afbeb7d6d02a581",
-					"host": [
-						"{{BASE_URL}}"
-					],
-					"port": "{{PORT}}",
-					"path": [
-						"universities",
-						"632af67e6afbeb7d6d02a581"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "GET countries list",
-			"request": {
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "{{BASE_URL}}:{{PORT}}/universities/countries",
-					"host": [
-						"{{BASE_URL}}"
-					],
-					"port": "{{PORT}}",
-					"path": [
-						"universities",
-						"countries"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "GET university by name",
-			"request": {
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "{{BASE_URL}}:{{PORT}}/universities?name=federal",
-					"host": [
-						"{{BASE_URL}}"
-					],
-					"port": "{{PORT}}",
-					"path": [
-						"universities"
-					],
-					"query": [
-						{
-							"key": "name",
-							"value": "federal"
+				{
+					"name": "GET ALL universities",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}:{{PORT}}/universities",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"port": "{{PORT}}",
+							"path": [
+								"universities"
+							]
 						}
-					]
+					},
+					"response": []
+				},
+				{
+					"name": "CREATE university",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{TOKEN_ADMIN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"alpha_two_code\": \"TT\",\r\n    \"web_pages\": [\"page1@page.com\", \"page2@page.com\"],\r\n    \"name\": \"University\",\r\n    \"country\": \"Test\",\r\n    \"domains\": [\"uni.br\", \"uni.org\"],\r\n    \"state-province\": \"AA\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASE_URL}}:{{PORT}}/universities",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"port": "{{PORT}}",
+							"path": [
+								"universities"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET university by _id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}:{{PORT}}/universities/632b6dc43e0f93a22cdf4ef6",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"port": "{{PORT}}",
+							"path": [
+								"universities",
+								"632b6dc43e0f93a22cdf4ef6"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET universities by country",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}:{{PORT}}/universities?country=Brazil",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"port": "{{PORT}}",
+							"path": [
+								"universities"
+							],
+							"query": [
+								{
+									"key": "country",
+									"value": "Brazil"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET universities by pagination",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}:{{PORT}}/universities?page=1",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"port": "{{PORT}}",
+							"path": [
+								"universities"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET universities by country and name",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}:{{PORT}}/universities?country=Brazil&name=federal",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"port": "{{PORT}}",
+							"path": [
+								"universities"
+							],
+							"query": [
+								{
+									"key": "country",
+									"value": "Brazil"
+								},
+								{
+									"key": "name",
+									"value": "federal"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET universities by page, country and name",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}:{{PORT}}/universities?page=1&country=Brazil&name=federal",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"port": "{{PORT}}",
+							"path": [
+								"universities"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "country",
+									"value": "Brazil"
+								},
+								{
+									"key": "name",
+									"value": "federal"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "UPDATE university",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"alpha_two_code\": \"BR\",\r\n    \"web_pages\": [\"teste1\", \"teste2\"],\r\n    \"name\": \"testando update\",\r\n    \"country\": \"Brazil\",\r\n    \"domains\": [\"D1\", \"D2\"],\r\n    \"state-province\": \"state\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASE_URL}}:{{PORT}}/universities/6328f4020e93657cb280a24e",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"port": "{{PORT}}",
+							"path": [
+								"universities",
+								"6328f4020e93657cb280a24e"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DELETE university",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}:{{PORT}}/universities/632af67e6afbeb7d6d02a581",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"port": "{{PORT}}",
+							"path": [
+								"universities",
+								"632af67e6afbeb7d6d02a581"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET countries list",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}:{{PORT}}/countries",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"port": "{{PORT}}",
+							"path": [
+								"countries"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET university by name",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}:{{PORT}}/universities?name=federal",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"port": "{{PORT}}",
+							"path": [
+								"universities"
+							],
+							"query": [
+								{
+									"key": "name",
+									"value": "federal"
+								}
+							]
+						}
+					},
+					"response": []
 				}
-			},
-			"response": []
+			]
 		},
 		{
-			"name": "GET config",
-			"request": {
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "{{BASE_URL}}:{{PORT}}/config",
-					"host": [
-						"{{BASE_URL}}"
-					],
-					"port": "{{PORT}}",
-					"path": [
-						"config"
-					]
+			"name": "users",
+			"item": [
+				{
+					"name": "GET ALL users",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{TOKEN_ADMIN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}:{{PORT}}/users",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"port": "{{PORT}}",
+							"path": [
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "CREATE user",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzYWNjOWMxM2QwYzdhMWFlNmJkNzAyZSIsImFjY2VzcyI6ImFkbWluIiwiaWF0IjoxNjcyNDMwMDE3LCJleHAiOjE2NzMwMzAwMTd9.oUCrptOejPpM5mwsn0xIS-720GiugT_CCCUHyDdGV-Y",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"admin2\",\r\n    \"email\": \"admin@email.com\",\r\n    \"password\": \"123\",\r\n    \"access\": \"admin\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASE_URL}}:{{PORT}}/users",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"port": "{{PORT}}",
+							"path": [
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "UPDATE user",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{TOKEN_ADMIN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"user_updated\",\r\n    \"email\": \"admin@email.com\",\r\n    \"password\": \"123\",\r\n    \"access\": \"admin\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASE_URL}}:{{PORT}}/users/63b82ae05b27124d63fee5f2",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"port": "{{PORT}}",
+							"path": [
+								"users",
+								"63b82ae05b27124d63fee5f2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DELETE user",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{TOKEN_ADMIN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}:{{PORT}}/users/63b82ae05b27124d63fee5f2",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"port": "{{PORT}}",
+							"path": [
+								"users",
+								"63b82ae05b27124d63fee5f2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET users by pagination",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{TOKEN_ADMIN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}:{{PORT}}/users?page=1",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"port": "{{PORT}}",
+							"path": [
+								"users"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET users by page and name",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}:{{PORT}}/users?page=1&name=user",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"port": "{{PORT}}",
+							"path": [
+								"users"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "name",
+									"value": "user"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET user by _id",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{TOKEN_ADMIN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}:{{PORT}}/users/63b82170380401b286177d97",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"port": "{{PORT}}",
+							"path": [
+								"users",
+								"63b82170380401b286177d97"
+							]
+						}
+					},
+					"response": []
 				}
-			},
-			"response": []
+			]
+		},
+		{
+			"name": "login",
+			"item": [
+				{
+					"name": "login",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"user\",\r\n    \"password\": \"123\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASE_URL}}:{{PORT}}/login",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"port": "{{PORT}}",
+							"path": [
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "validate access",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzYWI1MjBjMjQ2MWJjNGU2YWEwOTAzNiIsImlhdCI6MTY3MjE3NzA1MSwiZXhwIjoxNjcyMTc3MTExfQ.hXKvVvZOEURfVXiWAZl1OMDkwJTUDoq7SFgnBKZPb9g",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASE_URL}}:{{PORT}}/validate",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"port": "{{PORT}}",
+							"path": [
+								"validate"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "config",
+			"item": [
+				{
+					"name": "GET config",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}:{{PORT}}/config",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"port": "{{PORT}}",
+							"path": [
+								"config"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "UPDATE config",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{TOKEN_ADMIN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{ \r\n    \"url\": \"http://universities.hipolabs.com/search?country=\",\r\n    \"countries\": [\"argentina\", \"brazil\", \"chile\", \"colombia\", \"paraguay\", \"peru\", \"suriname\", \"uruguay\"],\r\n    \"perPage\": 20,\r\n    \"timeOut\": 600000\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASE_URL}}:{{PORT}}/config/63adfa4a9b2f79ea7632fba4",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"port": "{{PORT}}",
+							"path": [
+								"config",
+								"63adfa4a9b2f79ea7632fba4"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "groups",
+			"item": [
+				{
+					"name": "GET ALL groups",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{TOKEN_ADMIN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}:{{PORT}}/groups",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"port": "{{PORT}}",
+							"path": [
+								"groups"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "logs",
+			"item": [
+				{
+					"name": "GET logs",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{TOKEN_ADMIN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}:{{PORT}}/log",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"port": "{{PORT}}",
+							"path": [
+								"log"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DELETE logs",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{TOKEN_ADMIN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}:{{PORT}}/log",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"port": "{{PORT}}",
+							"path": [
+								"log"
+							]
+						}
+					},
+					"response": []
+				}
+			]
 		}
 	]
 }
