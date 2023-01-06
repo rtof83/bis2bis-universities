@@ -1,51 +1,38 @@
 # Projeto Universidades
 
+## O projeto tem como objetivo varrer uma API externa para obter uma lista de universidades contidas em cada país previamente informados nas configurações iniciais.
+
+---
+
 ## Foi utilizado para contrução:
-- API -> Node;
-- FRONT -> React;
-- DB -> MongoDB;
-- Conteinerização -> Docker;
+- API:
+  - Node;
+
+- FRONT:
+  - React;
+
+- DB:
+  - MongoDB;
+
+- Conteinerização:
+  - Docker;
+
+- Autenticação:
+  - JWT;
+
+- Testes:
+  - Jest;
+
 - Ferramentas:
-    - Visual Studio Code 1.73.1;
+    - Visual Studio Code 1.74.2;
     - Console de Gerenciamento da AWS;
 
-&nbsp;
 
-## [Estrutura da base de dados:](https://github.com/rtof83/bis2bis-universities/blob/main/api/models/University.js)
-- Universidade (University):
+---
+<!-- &nbsp; -->
 
-```javascript
+## Instalação e Inicialização:
 
-  alpha_two_code: String,
-  web_pages: Array,
-  name: String,
-  country: String,
-  domains: Array,
-  'state-province': String
-
-```
-
-&nbsp;
-
-## [Estrutura da configuração inicial:](https://github.com/rtof83/bis2bis-universities/blob/main/api/models/Create.js)
-
-```javascript
-{
-    url: 'http://universities.hipolabs.com/search?country=',
-    countries: [ "argentina",
-                 "brazil",
-                 "chile",
-                 "colombia",
-                 "paraguay",
-                 "peru",
-                 "suriname",
-                 "uruguay" ]
-}
-```
-
-&nbsp;
-
-## Instalação e Inicialização
 - npm (/api):
     - npm install;
     - npm start;
@@ -62,26 +49,33 @@
     - construção de ambos os projetos (/raiz):
         - docker-compose up;
 
-- porta padrão API: [configuração inicial .env](https://github.com/rtof83/bis2bis-universities/blob/main/api/.env.example);
-- porta padrão WEB: 3000;
+- Testes:
+    - npm install;
+    - npx jest nome-do-arquivo;
 
-- a aplicação pode ser acessada através do link:
-  - http://bis2bis-uni.s3-website-us-east-1.amazonaws.com
-  - FRONT armazenado em instância Amazon S3;
-  - API instanciada em EC2 AWS:
-    - http://18.234.224.108:3001;
+- porta padrão API: [configuração inicial .env](https://github.com/rtof83/bis2bis-universities/blob/main/api/.env.example);
+
+- porta padrão WEB: 3000;
 
 &nbsp;
 
+- ### a aplicação pode ser acessada através dos links:
+  - http://bis2bis-uni.s3-website-us-east-1.amazonaws.com
+  - API instanciada em EC2 AWS (http://34.235.89.154:3001)
+
+---
+<!-- &nbsp; -->
+
 ## Configurações
-- [API - conexão com a base de dados](https://github.com/rtof83/bis2bis-universities/blob/main/api/database/conn.js);
 
 - [FRONT - conexão com a API](https://github.com/rtof83/bis2bis-universities/blob/main/web/src/api.js);
 
-- [ENV - arquivo de configuração inicial](https://github.com/rtof83/bis2bis-universities/blob/main/api/.env.example) (deve ser renomeado para .env):
-  - exemplo de configuração:
+- [ENV - arquivo de configuração inicial](https://github.com/rtof83/bis2bis-universities/blob/main/api/.env.example) <strong>(antes da inicialização, deve ser renomeado para .env):</strong>
+
+  - exemplo configuração:
 
   ```javascript
+
     DB_USER = user
     DB_PASS = password
     DB_CLUSTER = cluster
@@ -90,7 +84,21 @@
 
     PORT = 3001
 
-    PER_PAGE = 20
+    SECRET = secret_word
+
+    UPDATE_HOUR = 24    # -> intervalo (em horas) que o sistema atualiza automaticamente a lista de universidades
+
+
+    ### initial config to database (configuração que será exportada para a collection "config")
+
+    PER_PAGE = 20       # -> paginação
+
+    TIMEOUT = 600000   # -> 'ms' or 'h' or 'd' (tempo de sessão)
+
+    URL_CONFIG = http://universities.hipolabs.com/search?country=
+    COUNTRIES_CONFIG = argentina, brazil, chile, colombia, paraguay, peru, suriname, uruguay
+
+    
   ```
 
 - [Dockerfile (api)](https://github.com/rtof83/bis2bis-universities/blob/main/api/Dockerfile);
@@ -147,63 +155,336 @@
         - "3000:3000"
     ```
 
-&nbsp;
+---
+<!-- &nbsp; -->
 
-&nbsp;
+## Estrutura da base de dados:
+
+- [Universidade (University):](https://github.com/rtof83/bis2bis-universities/blob/main/api/models/University.js)
+
+```javascript
+  alpha_two_code: String,
+  web_pages: Array,
+  name: String,
+  country: String,
+  domains: Array,
+  'state-province': String
+```
+
+- [Usuário (User):](https://github.com/rtof83/bis2bis-universities/blob/main/api/models/User.js)
+
+```javascript
+  name: String,
+  email: String,
+  password: String,
+  access: String
+```
+
+- [Grupo (Group):](https://github.com/rtof83/bis2bis-universities/blob/main/api/models/Group.js)
+
+```javascript
+  name: String,
+  POST: Object,
+  DELETE: Object,
+  PUT: Object,
+  GET: Object
+```
+
+- [Configuração (Config):](https://github.com/rtof83/bis2bis-universities/blob/main/api/models/Config.js)
+
+```javascript
+  url: String,
+  countries: Array,
+  perPage: Number,
+  timeOut: Number
+```
+
+- [Log:](https://github.com/rtof83/bis2bis-universities/blob/main/api/models/Log.js)
+
+```javascript
+  lastUpdate: Date,
+  message: String
+```
+
+---
+<!-- &nbsp; -->
 
 ### Implementações API:
+
 - [Collections Postman](https://github.com/rtof83/bis2bis-universities/blob/main/samples/universities.postman_collection.json);
 
 - Rotas de acesso:
-    - POST
-        - {baseURL}/universities/create -> cria lista de universidades a partir da configuração inicial;
-        - {baseURL}/universities -> cadastra universidade;
 
-    - GET
-        - {baseURL}/universities -> retorna todos os registros;
-        - {baseURL}/universities/{id} -> retorna registro por id;
-        - {baseURL}/universities?page={page} -> retorna registros por paginação;
-        - {baseURL}/universities?name={name} -> retorna registros por nome;
-        - {baseURL}/universities?country={country} -> retorna registros por país;
-        - {baseURL}/universities?country={country}&name={name} -> retorna registros por país e nome;
-        - {baseURL}/universities?page={page}&country={country}&name={name} -> retorna registros por paginação, país e nome;
-        - {baseURL}/universities/countries -> lista todos os países das universidades cadastradas na base de dados;
-        - {baseURL}/config -> retorna url da api externa e lista de países a serem consultados;
+  - <strong>Padrões</strong> (rotas que retornam todos os [métodos](https://github.com/rtof83/bis2bis-universities/blob/main/api/methods/index.js) de forma automatizada através dos [modelos](https://github.com/rtof83/bis2bis-universities/blob/main/api/models/index.js) informados)
 
-    - PUT
-        - {baseURL}/universities/{id} -> atualiza registro;
+    - UNIVERSITIES
 
-    - DELETE
-        - {baseURL}/universities/{id} -> exclui registro;
+      > GET
+      - {baseURL}/universities:
+        - retorna todas universidades;
 
-- Middlewares:
-    - [checkUniversity](https://github.com/rtof83/bis2bis-universities/blob/main/api/middlewares/checkUniversity.js) -> verifica se registro já existe ao tentar cadastrar (nome, país e estado);
+      - {baseURL}/universities/{id}:
+        - retorna universidade por id;
 
-- Buscas:
-    - retorna até XX registros por página ([.env -> PER_PAGE](https://github.com/rtof83/bis2bis-universities/blob/main/api/.env.example));
+      - {baseURL}/universities?page={page}:
+        - retorna registros por paginação;
+
+      - {baseURL}/universities?name={name}:
+        - retorna registros por nome;
+
+      - {baseURL}/universities?country={country}:
+        - retorna registros por país;
+
+      - {baseURL}/universities?country={country}&name={name}:
+        - retorna registros por país e nome;
+
+      - {baseURL}/universities?page={page}&country={country}&name={name}:
+        - retorna registros por paginação, país e nome;
+
+      - {baseURL}/universities/countries:
+        - lista todos os países das universidades cadastradas na base de dados;
+
+      &nbsp;
+    
+      >POST
+      - {baseURL}/create:
+        - cria lista de universidades a partir da configuração inicial;
+
+      - {baseURL}/universities:
+        - cadastra universidade;
+
+      &nbsp;
+      
+      >PUT e DELETE
+      - {baseURL}/universities/{id}:
+        - atualiza e exclui registro;
+
+      &nbsp;
+
+    - USERS
+
+      > GET
+      - {baseURL}/users:
+        - retorna todos usuários (access: admin);
+        - retorna somente o usuário requisitante (access: user);
+
+      - {baseURL}/users/{id}:
+        - retorna usuário por id;
+
+      - {baseURL}/users?page={page}:
+        - retorna registros por paginação;
+
+      - {baseURL}/users?name={name}:
+        - retorna registros por nome;
+
+      - {baseURL}/users?page={page}&name={name}:
+        - retorna registros por paginação e nome;
+
+      &nbsp;
+      
+      >POST
+      - {baseURL}/users:
+        - cria usuário;
+
+      &nbsp;
+      
+      >PUT e DELETE
+      - {baseURL}/universities/{id}:
+        - atualiza e exclui registro;
 
     &nbsp;
 
-    #### exemplo de inserção ou atualização de Universidade
+  - [Rotas Personalizadas](https://github.com/rtof83/bis2bis-universities/tree/main/api/routes)
 
-    ```javascript
-    {
-        "alpha_two_code": "BR",
-        "web_pages": ["page1@page.com", "page2@page.com"],
-        "name": "University",
-        "country": "Brazil",
-        "domains": ["uni.br", "uni.org"],
-        "state-province": "AA"
-    }
-    ```
+    - LOGIN
+
+      >POST
+      - {baseURL}/login:
+        - valida autenticação ao sistema através da inserção de usuário e senha;
+
+      - {baseURL}/validate:
+        - retorna se o usuário possui acesso ao sistema através de token;
+
+    &nbsp;
+
+    - CONFIG
+
+      >POST
+      - {baseURL}/config:
+        - retorna as configurações do sistema;
+
+      &nbsp;
+
+      >PUT
+      - {baseURL}/config:
+        - atualiza configurações;
+
+    &nbsp;
+
+    - LOG
+
+      >GET
+      - {baseURL}/log:
+        - retorna lista de logs;
+
+      &nbsp;
+
+      >DELETE
+      - {baseURL}/log:
+        - exclui toda a lista;
+
+    &nbsp;
+
+    - GROUP
+
+      >GET
+      - {baseURL}/group:
+        - retorna lista de grupo de acesso;
 
 &nbsp;
 
-### Implementações FRONT:
-- Criação de lista de universidades a partir da configuração inicial;
+- [Middlewares:](https://github.com/rtof83/bis2bis-universities/tree/main/api/middlewares)
+
+  - checkUniversity:
+    - verifica se registro já existe ao tentar cadastrar nova universidade (nome, país e estado);
+
+  - checkUser:
+    - verifica se registro já existe ao tentar cadastrar novo usuário (nome);
+
+  - checkAdminDel:
+    - ao excluir usuário, verifica se existe ao menos um administrador na base de dados;
+
+  - checkRoute:
+    - valida cada rota de acesso através do nível de permissão dos grupos de usuário;
+
+  - checkValidate:
+    - retorna a autenticação de acesso através do token informado;
+
+- [Serviços:](https://github.com/rtof83/bis2bis-universities/tree/main/api/services)
+
+  - createUniversities:
+    - retorna lista de universidades a partir da configuração inicial. Será requisitado automaticamente de acordo com a variável UPDATE_HOUR (.env) ou ainda através do endpoint {baseURL}/create. É gerado um log a cada solicitação;
+
+  - updateHour:
+    - executa a o serviço createUniversities a partir da periodicidade informada em UDATE_HOUR (.env);
+
+  - initialConfig, initialGroup, initialUniversities, initialUser:
+    - envia ao banco de dados as informações iniciais caso não existam (.env);
+
+&nbsp;
+
+- [Testes (endpoints):](https://github.com/rtof83/bis2bis-universities/tree/main/api/tests)
+
+  - config:
+    - get config;
+    - get complete config;
+
+  - log:
+    - get logs;
+    - delete logs;
+
+  - user:
+    - get users list;
+    - get user by id;
+    - create user;
+    - return error when create same user;
+    - update user;
+    - delete user;
+
+  - university:
+    - get countries list;
+    - get universities list;
+    - get university by id;
+    - create university;
+    - return error when create same university;
+    - update university;
+    - delete university;
+
+&nbsp;
+
+### Exemplos de inserção / atualização
+
+- Universidade:
+
+  ```javascript
+  {
+      "alpha_two_code": "BR",
+      "web_pages": ["page1@page.com", "page2@page.com"],
+      "name": "University",
+      "country": "Brazil",
+      "domains": ["uni.br", "uni.org"],
+      "state-province": "AA"
+  }
+  ```
+
+- Usuário:
+
+  ```javascript
+  {
+    "name": "user",
+    "email": "user@email.com",
+    "password": "pass"
+  }
+  ```
+
+- Config:
+
+  ```javascript
+  { 
+    "url": "http://universities.hipolabs.com/search?country=",
+    "countries": ["argentina", "brazil", "chile", "colombia", "paraguay", "peru", "suriname", "uruguay"],
+    "perPage": 10,
+    "timeOut": 600000
+  }
+  ```
+
+&nbsp;
+
+### Estrutura Grupo de Acesso
+
+- admin:
+  - possui acesso completo a todos os métodos e rotas;
+
+  ```javascript
+  {
+    "name": "admin",
+    "POST": { "grant": "all" },
+    "DELETE": { "grant": "all" },
+    "PUT": { "grant": "all" },
+    "GET": { "grant": "all" }
+  }
+  ```
+
+- user:
+  - acesso negado ao método POST (qualquer rota);
+  - acesso ao método DELETE e GET apenas à rota /users e restrito ao usuário que a acessa;
+  - acesso ao método PUT: completo na rota /universities e restrito ao usuário que acessa a rota /users;
+
+  ```javascript
+  {
+    "name": "user",
+    "POST": { "grant": "none" },
+    "DELETE": { "grant": { "/users": "self" } },
+    "PUT": { "grant": { "/universities": "all", "/users": "self" } },
+    "GET": { "grant": { "/users": "self" } }
+  }
+  ```
+
+&nbsp;
+
+### Implementações WEB:
 - Cadastro, alteração e exclusão de Universidade;
-- Lista Universidades;
-- Busca por ID;
-- Busca por Nome;
-- Busca por País;
-- Busca combinada;
+- Cadastro, alteração e exclusão de Usuário;
+- Configurações;
+- Login;
+- Lista Universidades:
+  - Busca por ID;
+  - Busca por Nome;
+  - Busca por País;
+  - Busca combinada;
+  - Paginação;
+
+- Lista Usuários:
+  - Busca por ID;
+  - Busca por nome;
+  - Paginação;

@@ -1,6 +1,7 @@
 /files
 
 api/node_modules
+api/coverage
 api/.env
 
 web/node_modules
