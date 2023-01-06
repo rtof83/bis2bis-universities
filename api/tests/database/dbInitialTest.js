@@ -46,10 +46,10 @@ const initialLog = { lastUpdate: new Date(),
 // =======================================================
 
 const initialUniversity = { 'alpha_two_code': 'TT',
-                            'web_pages': ['page1@page.com', 'page2@page.com', '000'],
+                            'web_pages': [ 'page1@page.com', 'page2@page.com' ],
                             'name': 'University',
                             'country': 'Test',
-                            'domains': ['uni.br', 'uni.org', 'dddd'],
+                            'domains': [ 'uni.br', 'uni.org' ],
                             'state-province': 'AA'
                           };
 
