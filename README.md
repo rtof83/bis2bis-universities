@@ -4,19 +4,35 @@
 
 &nbsp;
 
-## Foi utilizado para contrução:
-- API -> Node;
-- FRONT -> React;
-- DB -> MongoDB;
-- Conteinerização -> Docker;
-- Autenticação -> JWT;
-- Testes -> Jest;
-- Ferramentas:
-    - Visual Studio Code 1.74.2;
-    - Console de Gerenciamento da AWS;
+## Conteúdo
+- [Contrução](#construção)
+- [Instalação e Inicialização](#instalação-e-inicialização)
+- [Acesso à Aplicação](#a-aplicação-pode-ser-acessada-através-dos-links)
+- [Configurações](#configurações)
+- [Estrutura da Base de Dados](#estrutura-da-base-de-dados)
+- [Implementações API](#implementações-api)
+- [Exemplos Inserção / Atualização](#exemplos-de-inserção--atualização)
+- [Estrutura Grupo de Acesso](#estrutura-grupo-de-acesso)
+- [Implementações WEB](#implementações-web)
 
----
-<!-- &nbsp; -->
+&nbsp;
+
+## Construção:
+
+|                   |                                         |
+| ----------------- | --------------------------------------- |
+| `API`             | Node                                    |
+| `WEB`             | React                                   |
+| `Base de Dados`   | MongoDB                                 |
+| `Conteinerização` | Docker                                  |
+| `Autenticação`    | JWT                                     |
+| `Testes`          | Jest                                    |
+| `Ferramentas`     | Visual Studio Code 1.74.2               |
+|                   | Console de Gerenciamento da AWS         |
+|                   | Console de Gerenciamento MongoDB Atlas  |
+
+<!-- --- -->
+&nbsp;
 
 ## Instalação e Inicialização:
 
@@ -53,154 +69,153 @@
 &nbsp;
 
 - ### a aplicação pode ser acessada através dos links:
-  - http://bis2bis-uni.s3-website-us-east-1.amazonaws.com
-  - API instanciada em EC2 AWS (http://34.235.89.154:3001)
+  - WEB (armazenado em instância Amazon S3)
+    - http://bis2bis-uni.s3-website-us-east-1.amazonaws.com
+  - API (instanciada em EC2 AWS)
+    - http://34.235.89.154:3001
 
----
-<!-- &nbsp; -->
+<!-- --- -->
+&nbsp;
 
 ## Configurações
 
-- [FRONT - conexão com a API](https://github.com/rtof83/bis2bis-universities/blob/main/web/src/api.js);
+- [WEB - conexão com a API](https://github.com/rtof83/bis2bis-universities/blob/main/web/src/api.js);
 
-- [ENV - arquivo de configuração inicial](https://github.com/rtof83/bis2bis-universities/blob/main/api/.env.example) <strong>(antes da inicialização, deve ser renomeado para .env):</strong>
+- [ENV - arquivo de configuração inicial](https://github.com/rtof83/bis2bis-universities/blob/main/api/.env.example) <strong>(antes da inicialização, deve ser renomeado para .env e ):</strong>
 
-  - exemplo configuração:
+  exemplo configuração:
 
   ```javascript
+  DB_USER = user              |
+  DB_PASS = password          |
+  DB_CLUSTER = cluster        |--> parâmetros base de dados
+  DB_URL = url.mongodb.net    |
+  DB_NAME = dbname            |
 
-    DB_USER = user
-    DB_PASS = password
-    DB_CLUSTER = cluster
-    DB_URL = url.mongodb.net
-    DB_NAME = dbname
+  PORT = 3001               # -> porta API
 
-    PORT = 3001
+  SECRET = secret_word      # -> chave utilizada para geração / autenticação do token
 
-    SECRET = secret_word
-
-    UPDATE_HOUR = 24    # -> intervalo (em horas) que o sistema atualiza automaticamente a lista de universidades
+  UPDATE_HOUR = 24          # -> intervalo (em horas) que a aplicação atualiza automaticamente a lista de universidades
 
 
-    ### initial config to database (configuração que será exportada para a collection "config")
+  ### initial config to database (configuração que será exportada para a collection "config")
 
-    PER_PAGE = 20       # -> paginação
+  PER_PAGE = 20             # -> paginação
 
-    TIMEOUT = 600000   # -> 'ms' or 'h' or 'd' (tempo de sessão)
+  TIMEOUT = 600000          # -> 'ms' or 'h' or 'd' (tempo de sessão)
 
-    URL_CONFIG = http://universities.hipolabs.com/search?country=
-    COUNTRIES_CONFIG = argentina, brazil, chile, colombia, paraguay, peru, suriname, uruguay
-
-    
+  URL_CONFIG = http://universities.hipolabs.com/search?country=
+  COUNTRIES_CONFIG = argentina, brazil, chile, colombia, paraguay, peru, suriname, uruguay
   ```
 
-- [Dockerfile (api)](https://github.com/rtof83/bis2bis-universities/blob/main/api/Dockerfile);
+- [Dockerfile (api):](https://github.com/rtof83/bis2bis-universities/blob/main/api/Dockerfile)
 
-    ``` javascript
-    FROM node:alpine
+  ``` javascript
+  FROM node:alpine
 
-    WORKDIR /app/universities-api
+  WORKDIR /app/universities-api
 
-    COPY ./package*.json ./
+  COPY ./package*.json ./
 
-    RUN npm install
+  RUN npm install
 
-    COPY . .
+  COPY . .
 
-    EXPOSE 3001
+  EXPOSE 3001
 
-    CMD ["npm", "start"]
-    ```
+  CMD ["npm", "start"]
+  ```
 
-- [Dockerfile (web)](https://github.com/rtof83/bis2bis-universities/blob/main/web/Dockerfile);
+- [Dockerfile (web):](https://github.com/rtof83/bis2bis-universities/blob/main/web/Dockerfile)
 
-    ``` javascript
-    FROM node:16
+  ``` javascript
+  FROM node:16
 
-    WORKDIR /app/universities-web
+  WORKDIR /app/universities-web
 
-    COPY ./package*.json ./
+  COPY ./package*.json ./
 
-    RUN npm install
+  RUN npm install
 
-    COPY . .
+  COPY . .
 
-    EXPOSE 3000
+  EXPOSE 3000
 
-    CMD ["npm", "start"]
-    ```
+  CMD ["npm", "start"]
+  ```
 
-- [docker-compose](https://bitbucket.org/recrutamento_jya_nodejs/recrutamento-conversor-nodejs-zuichuan_msn.com/src/master/docker-compose.yml);
+- [docker-compose:](https://github.com/rtof83/bis2bis-universities/blob/main/docker-compose.yml)
 
-    ``` javascript
-    version: "3"
+  ``` javascript
+  version: "3"
 
-    services:
+  services:
 
-    dockerapi:
-        build: ./api
-        ports:
-        - "3001:3001"
-        
-    dockerweb:
-        build: ./web
-        ports:
-        - "3000:3000"
-    ```
+  dockerapi:
+      build: ./api
+      ports:
+      - "3001:3001"
+      
+  dockerweb:
+      build: ./web
+      ports:
+      - "3000:3000"
+  ```
 
----
-<!-- &nbsp; -->
+<!-- --- -->
+&nbsp;
 
-## Estrutura da base de dados:
+## Estrutura da Base de Dados:
 
 - [Universidade (University):](https://github.com/rtof83/bis2bis-universities/blob/main/api/models/University.js)
 
-```javascript
-  alpha_two_code: String,
-  web_pages: Array,
-  name: String,
-  country: String,
-  domains: Array,
+  ```javascript
+  alpha_two_code: String
+  web_pages: Array
+  name: String
+  country: String
+  domains: Array
   'state-province': String
-```
+  ```
 
 - [Usuário (User):](https://github.com/rtof83/bis2bis-universities/blob/main/api/models/User.js)
 
-```javascript
-  name: String,
-  email: String,
-  password: String,
+  ```javascript
+  name: String
+  email: String
+  password: String
   access: String
-```
+  ```
 
 - [Grupo (Group):](https://github.com/rtof83/bis2bis-universities/blob/main/api/models/Group.js)
 
-```javascript
-  name: String,
-  POST: Object,
-  DELETE: Object,
-  PUT: Object,
+  ```javascript
+  name: String
+  POST: Object
+  DELETE: Object
+  PUT: Object
   GET: Object
-```
+  ```
 
 - [Configuração (Config):](https://github.com/rtof83/bis2bis-universities/blob/main/api/models/Config.js)
 
-```javascript
-  url: String,
-  countries: Array,
-  perPage: Number,
+  ```javascript
+  url: String
+  countries: Array
+  perPage: Number
   timeOut: Number
-```
+  ```
 
 - [Log:](https://github.com/rtof83/bis2bis-universities/blob/main/api/models/Log.js)
 
-```javascript
-  lastUpdate: Date,
+  ```javascript
+  lastUpdate: Date
   message: String
-```
+  ```
 
----
-<!-- &nbsp; -->
+<!-- --- -->
+&nbsp;
 
 ### Implementações API:
 
@@ -208,131 +223,123 @@
 
 - Rotas de acesso:
 
-  - <strong>Padrões</strong> (rotas que retornam todos os [métodos](https://github.com/rtof83/bis2bis-universities/blob/main/api/methods/index.js) de forma automatizada através dos [modelos](https://github.com/rtof83/bis2bis-universities/blob/main/api/models/index.js) informados)
+  - <strong>Padrão</strong> (rotas que retornam todos os [métodos](https://github.com/rtof83/bis2bis-universities/blob/main/api/methods/index.js) de forma automatizada através dos [modelos](https://github.com/rtof83/bis2bis-universities/blob/main/api/models/index.js) informados)
 
     - UNIVERSITIES
 
-      > GET
-      - {baseURL}/universities:
-        - retorna todas universidades;
+      | GET                                                                 |                                                                       |
+      | ------------------------------------------------------------------  | --------------------------------------------------------------------- |
+      | `{baseURL}/universities`                                            | retorna todas universidades                                           |
+      | `{baseURL}/universities/{id}`                                       | retorna universidade por id                                           |
+      | `{baseURL}/universities?page={page}`                                | retorna registros por paginação                                       |
+      | `{baseURL}/universities?name={name}`                                | retorna registros por nome                                            |
+      | `{baseURL}/universities?country={country}`                          | retorna registros por país                                            |
+      | `{baseURL}/universities?country={country}&name={name}`              | retorna registros por país e nome                                     |
+      | `{baseURL}/universities?page={page}&country={country}&name={name}`  | retorna registros por paginação, país e nome                          |
 
-      - {baseURL}/universities/{id}:
-        - retorna universidade por id;
 
-      - {baseURL}/universities?page={page}:
-        - retorna registros por paginação;
+      | POST                                                                |                                                                       |
+      | ------------------------------------------------------------------- | --------------------------------------------------------------------- |
+      | `{baseURL}/universities`                                            | cadastra universidade                                                 |
 
-      - {baseURL}/universities?name={name}:
-        - retorna registros por nome;
 
-      - {baseURL}/universities?country={country}:
-        - retorna registros por país;
+      | PUT                                                                 |                                                                       |
+      | ------------------------------------------------------------------- | --------------------------------------------------------------------- |
+      | `{baseURL}/universities/{id}`                                       | atualiza universidade                                                 |
 
-      - {baseURL}/universities?country={country}&name={name}:
-        - retorna registros por país e nome;
 
-      - {baseURL}/universities?page={page}&country={country}&name={name}:
-        - retorna registros por paginação, país e nome;
-
-      - {baseURL}/universities/countries:
-        - lista todos os países das universidades cadastradas na base de dados;
-
-      &nbsp;
-    
-      >POST
-      - {baseURL}/create:
-        - cria lista de universidades a partir da configuração inicial;
-
-      - {baseURL}/universities:
-        - cadastra universidade;
-
-      &nbsp;
-      
-      >PUT e DELETE
-      - {baseURL}/universities/{id}:
-        - atualiza e exclui registro;
+      | DELETE                                                              |                                                                       |
+      | ------------------------------------------------------------------- | --------------------------------------------------------------------- |
+      | `{baseURL}/universities/{id}`                                       | exclui universidade                                                   |
 
       &nbsp;
 
     - USERS
 
-      > GET
-      - {baseURL}/users:
-        - retorna todos usuários (access: admin);
-        - retorna somente o usuário requisitante (access: user);
+      | GET                                                                 |                                                                       |
+      | ------------------------------------------------------------------- | --------------------------------------------------------------------- |
+      | `{baseURL}/users`                                                   | retorna todos usuários (access: admin)                                |
+      |                                                                     | retorna somente o usuário requisitante (access: user)                 |
+      | `{baseURL}/users/{id}`                                              | retorna usuário por id                                                |
+      | `{baseURL}/users?page={page}`                                       | retorna registros por paginação                                       |
+      | `{baseURL}/users?name={name}`                                       | retorna registros por nome                                            |
+      | `{baseURL}/users?page={page}&name={name}`                           | retorna registros por paginação e nome                                |
 
-      - {baseURL}/users/{id}:
-        - retorna usuário por id;
 
-      - {baseURL}/users?page={page}:
-        - retorna registros por paginação;
+      | POST                                                                |                                                                       |
+      | ------------------------------------------------------------------- | --------------------------------------------------------------------- |
+      | `{baseURL}/users`                                                   | cria usuário                                                          |
 
-      - {baseURL}/users?name={name}:
-        - retorna registros por nome;
 
-      - {baseURL}/users?page={page}&name={name}:
-        - retorna registros por paginação e nome;
+      | PUT                                                                 |                                                                       |
+      | ------------------------------------------------------------------- | --------------------------------------------------------------------- |
+      | `{baseURL}/users/{id}`                                              | atualiza usuário                                                      |
 
-      &nbsp;
-      
-      >POST
-      - {baseURL}/users:
-        - cria usuário;
 
-      &nbsp;
-      
-      >PUT e DELETE
-      - {baseURL}/universities/{id}:
-        - atualiza e exclui registro;
+      | DELETE                                                              |                                                                       |
+      | ------------------------------------------------------------------- | --------------------------------------------------------------------- |
+      | `{baseURL}/users/{id}`                                              | exclui usuário                                                        |
 
     &nbsp;
 
   - [Rotas Personalizadas](https://github.com/rtof83/bis2bis-universities/tree/main/api/routes)
 
+    - UNIVERSITIES
+
+      | POST                                                                |                                                                       |
+      | ------------------------------------------------------------------- | --------------------------------------------------------------------- |
+      | `{baseURL}/create`                                                  | cria lista de universidades a partir da configuração inicial          |
+
+     &nbsp;
+
+    - COUNTRIES
+
+      | GET                                                                 |                                                                       |
+      | ------------------------------------------------------------------- | --------------------------------------------------------------------- |
+      | `{baseURL}/countries`                                               | lista todos os países das universidades cadastradas na base de dados  |
+
+    &nbsp;
+
     - LOGIN
 
-      >POST
-      - {baseURL}/login:
-        - valida autenticação ao sistema através da inserção de usuário e senha;
-
-      - {baseURL}/validate:
-        - retorna se o usuário possui acesso ao sistema através de token;
+      | POST                                                                |                                                                       |
+      | ------------------------------------------------------------------- | --------------------------------------------------------------------- |
+      | `{baseURL}/login`                                                   | valida autenticação ao sistema através da inserção de usuário e senha |
+      | `{baseURL}/validate`                                                | retorna se o usuário possui acesso ao sistema através de token        |
 
     &nbsp;
 
     - CONFIG
 
-      >POST
-      - {baseURL}/config:
-        - retorna as configurações do sistema;
+      | POST                                                                |                                                                       |
+      | ------------------------------------------------------------------- | --------------------------------------------------------------------- |
+      | `{baseURL}/config`                                                  | retorna as configurações da aplicação                                 |
 
-      &nbsp;
-
-      >PUT
-      - {baseURL}/config:
-        - atualiza configurações;
+    
+      | PUT                                                                 |                                                                       |
+      | ------------------------------------------------------------------- | --------------------------------------------------------------------- |
+      | `{baseURL}/config`                                                  | atualiza configurações                                                |
 
     &nbsp;
 
     - LOG
 
-      >GET
-      - {baseURL}/log:
-        - retorna lista de logs;
+      | GET                                                                 |                                                                       |
+      | ------------------------------------------------------------------- | --------------------------------------------------------------------- |
+      | `{baseURL}/log`                                                     | retorna lista de logs (ordem descrescente de data)                    |
 
-      &nbsp;
 
-      >DELETE
-      - {baseURL}/log:
-        - exclui toda a lista;
+      | DELETE                                                              |                                                                       |
+      | ------------------------------------------------------------------- | --------------------------------------------------------------------- |
+      | `{baseURL}/log`                                                     | exclui toda a lista                                                   |
 
     &nbsp;
 
     - GROUP
 
-      >GET
-      - {baseURL}/group:
-        - retorna lista de grupo de acesso;
+      | GET                                                                 |                                                                       |
+      | ------------------------------------------------------------------- | --------------------------------------------------------------------- |
+      | `{baseURL}/group`                                                   | retorna lista de grupo de acesso                                      |
 
 &nbsp;
 
@@ -353,13 +360,15 @@
   - checkValidate:
     - retorna a autenticação de acesso através do token informado;
 
+&nbsp;
+
 - [Serviços:](https://github.com/rtof83/bis2bis-universities/tree/main/api/services)
 
   - createUniversities:
     - retorna lista de universidades a partir da configuração inicial. Será requisitado automaticamente de acordo com a variável UPDATE_HOUR (.env) ou ainda através do endpoint {baseURL}/create. É gerado um log a cada solicitação;
 
   - updateHour:
-    - executa a o serviço createUniversities a partir da periodicidade informada em UDATE_HOUR (.env);
+    - executa o serviço createUniversities a partir da periodicidade informada em UPDATE_HOUR (.env);
 
   - initialConfig, initialGroup, initialUniversities, initialUser:
     - envia ao banco de dados as informações iniciais caso não existam (.env);
@@ -470,6 +479,7 @@
 - Cadastro, alteração e exclusão de Usuário;
 - Configurações;
 - Login;
+- Temporizador de sessão;
 - Lista Universidades:
   - Busca por ID;
   - Busca por Nome;
