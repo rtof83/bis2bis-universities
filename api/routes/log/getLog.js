@@ -13,7 +13,7 @@ const getLog = (route) => {
 
       try {
         if (decoded.access === 'admin') {
-          const log = await Log.find();
+          const log = await Log.find().sort({ lastUpdate: -1 });
 
           if (!log)
             return res.status(404).json({ message: 'Record not found!' });

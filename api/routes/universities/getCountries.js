@@ -9,7 +9,7 @@ const getCountries = (route) => {
         const countries = await University.aggregate([{$group: { _id: '$country' }}, {$sort: { _id: 1 }}]);
 
         if (!countries)
-          return res.status(422).json({ message: 'Record not found!' });
+          return res.status(404).json({ message: 'Record not found!' });
 
         res.status(200).json(countries);
       } catch (error) {

@@ -10,7 +10,7 @@ const getById = (route, model) => {
           const result = await model.findOne({ _id: req.params.id });
     
           if (!result)
-            return res.status(422).json({ message: 'Record not found!' });
+            return res.status(404).json({ message: 'Record not found!' });
     
           res.status(200).json(result);
         } else {
