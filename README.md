@@ -19,7 +19,7 @@
 
 ## Construção:
 
-|                   |                                         |
+| Recurso           |                                         |
 | ----------------- | --------------------------------------- |
 | `API`             | Node                                    |
 | `WEB`             | React                                   |
@@ -81,7 +81,7 @@
 
 - [WEB - conexão com a API](https://github.com/rtof83/bis2bis-universities/blob/main/web/src/api.js);
 
-- [ENV - arquivo de configuração inicial](https://github.com/rtof83/bis2bis-universities/blob/main/api/.env.example) <strong>(antes da inicialização, deve ser renomeado para .env e ):</strong>
+- [ENV - variáveis de ambiente - configuração inicial](https://github.com/rtof83/bis2bis-universities/blob/main/api/.env.example) <strong>(antes da inicialização, deve ser renomeado para .env):</strong>
 
   exemplo configuração:
 
@@ -231,11 +231,11 @@
       | ------------------------------------------------------------------  | --------------------------------------------------------------------- |
       | `{baseURL}/universities`                                            | retorna todas universidades                                           |
       | `{baseURL}/universities/{id}`                                       | retorna universidade por id                                           |
-      | `{baseURL}/universities?page={page}`                                | retorna registros por paginação                                       |
-      | `{baseURL}/universities?name={name}`                                | retorna registros por nome                                            |
-      | `{baseURL}/universities?country={country}`                          | retorna registros por país                                            |
-      | `{baseURL}/universities?country={country}&name={name}`              | retorna registros por país e nome                                     |
-      | `{baseURL}/universities?page={page}&country={country}&name={name}`  | retorna registros por paginação, país e nome                          |
+      | `{baseURL}/universities?page={page}`                                | retorna universidades por paginação                                   |
+      | `{baseURL}/universities?name={name}`                                | retorna universidades por nome                                        |
+      | `{baseURL}/universities?country={country}`                          | retorna universidades por país                                        |
+      | `{baseURL}/universities?country={country}&name={name}`              | retorna universidades por país e nome                                 |
+      | `{baseURL}/universities?page={page}&country={country}&name={name}`  | retorna universidades por paginação, país e nome                      |
 
 
       | POST                                                                |                                                                       |
@@ -261,9 +261,9 @@
       | `{baseURL}/users`                                                   | retorna todos usuários (access: admin)                                |
       |                                                                     | retorna somente o usuário requisitante (access: user)                 |
       | `{baseURL}/users/{id}`                                              | retorna usuário por id                                                |
-      | `{baseURL}/users?page={page}`                                       | retorna registros por paginação                                       |
-      | `{baseURL}/users?name={name}`                                       | retorna registros por nome                                            |
-      | `{baseURL}/users?page={page}&name={name}`                           | retorna registros por paginação e nome                                |
+      | `{baseURL}/users?page={page}`                                       | retorna usuários por paginação                                        |
+      | `{baseURL}/users?name={name}`                                       | retorna usuários por nome                                             |
+      | `{baseURL}/users?page={page}&name={name}`                           | retorna usuários por paginação e nome                                 |
 
 
       | POST                                                                |                                                                       |
