@@ -80,7 +80,7 @@ const listUniversities = () => {
                 { data && data.map((item) => (
                   !item.page &&
                     <StyledTableRow key={item._id}>
-                      <StyledTableCell align="center" component="th" scope="row">{item.lastUpdate}</StyledTableCell>
+                      <StyledTableCell align="center" component="th" scope="row">{new Date(item.lastUpdate).toLocaleString('pt-BR', { timeZone: 'UTC' })}</StyledTableCell>
                       <StyledTableCell align="left">{item.message}</StyledTableCell>
                     </StyledTableRow>
                 ))}
