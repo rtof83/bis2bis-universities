@@ -17,7 +17,7 @@ const getUserById = require('../methods/getById')('/users', User);
 const createUser = require('../methods/createRecord')('/users', User);
 const deleteUser = require('../methods/deleteRecord')('/users', User);
 const updateUser = require('../methods/updateRecord')('/users', User);
-const login = require('../routes/login')('/login');
+const login = require('../routes/login/login')('/login');
 
 // create admin, config and group from dbTest
 beforeAll(async () => {

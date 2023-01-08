@@ -12,9 +12,9 @@ const { initialUser,
         initialLog,
         initialConfig } = require('./database/dbInitialTest');
 
-const login = require('../routes/login')('/login');
-const getLog = require('../routes/getLog')('/log');
-const deleteLog = require('../routes/deleteLog')('/log');
+const login = require('../routes/login/login')('/login');
+const getLog = require('../routes/log/getLog')('/log');
+const deleteLog = require('../routes/log/deleteLog')('/log');
 
 // create admin, config, log from dbTest
 beforeAll(async () => {

@@ -14,13 +14,13 @@ const { initialConfig,
         initialGroupAdmin,
         initialUniversity } = require('./database/dbInitialTest');
 
-const getCountries = require('../routes/getCountries')('/countries');
+const login = require('../routes/login/login')('/login');
+const getCountries = require('../routes/universities/getCountries')('/countries');
 const getUniversities = require('../methods/getAll')('/universities', University);
 const getUniversityById = require('../methods/getById')('/universities', University);
 const createUniversity = require('../methods/createRecord')('/universities', University);
 const deleteUniversity = require('../methods/deleteRecord')('/universities', University);
 const updateUniversity = require('../methods/updateRecord')('/universities', University);
-const login = require('../routes/login')('/login');
 
 // create admin, config, universities and group from dbTest
 beforeAll(async () => {

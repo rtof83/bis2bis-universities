@@ -12,9 +12,9 @@ const { initialConfig,
         initialUser,
         initialGroupAdmin } = require('./database/dbInitialTest');
 
-const getConfig = require('../routes/getConfig')('/config');
-const updateConfig = require('../routes/updateConfig')('/config/:id');
-const login = require('../routes/login')('/login');
+const getConfig = require('../routes/config/getConfig')('/config');
+const updateConfig = require('../routes/config/updateConfig')('/config/:id');
+const login = require('../routes/login/login')('/login');
 
 // create admin, config and group from dbTest
 beforeAll(async () => {
