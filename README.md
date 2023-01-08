@@ -5,7 +5,7 @@
 &nbsp;
 
 ## Conteúdo
-- [Contrução](#construção)
+- [Construção](#construção)
 - [Instalação e Inicialização](#instalação-e-inicialização)
 - [Acesso à Aplicação](#a-aplicação-pode-ser-acessada-através-dos-links)
 - [Configurações](#configurações)
@@ -52,7 +52,7 @@
     - construção de ambos os projetos (/raiz):
         - docker-compose up;
 
-- Testes:
+- Testes (/api/tests):
     - npm install;
     - npx jest nome-do-arquivo;
 
@@ -65,8 +65,6 @@
   user: admin
   password: admin
   ```
-
-&nbsp;
 
 - ### a aplicação pode ser acessada através dos links:
   - WEB (armazenado em instância Amazon S3)
@@ -101,7 +99,7 @@
 
   ### initial config to database (configuração que será exportada para a collection "config")
 
-  PER_PAGE = 20             # -> paginação
+  PER_PAGE = 20             # -> número de registros por página (listas)
 
   TIMEOUT = 600000          # -> 'ms' or 'h' or 'd' (tempo de sessão)
 
@@ -355,17 +353,19 @@
     - ao excluir usuário, verifica se existe ao menos um administrador na base de dados;
 
   - checkRoute:
-    - valida cada rota de acesso através do nível de permissão dos grupos de usuário;
+    - valida cada rota de acesso através do nível de permissão dos grupos de acesso;
 
   - checkValidate:
-    - retorna a autenticação de acesso através do token informado;
+    - retorna permissão de acesso através do token informado;
 
 &nbsp;
 
 - [Serviços:](https://github.com/rtof83/bis2bis-universities/tree/main/api/services)
 
   - createUniversities:
-    - retorna lista de universidades a partir da configuração inicial. Será requisitado automaticamente de acordo com a variável UPDATE_HOUR (.env) ou ainda através do endpoint {baseURL}/create. É gerado um log a cada solicitação;
+    - retorna lista de universidades a partir da configuração inicial;
+    - será requisitado automaticamente de acordo com a variável UPDATE_HOUR (.env) ou ainda através do endpoint {baseURL}/create;
+    - é gerado um log a cada solicitação;
 
   - updateHour:
     - executa o serviço createUniversities a partir da periodicidade informada em UPDATE_HOUR (.env);
@@ -445,7 +445,7 @@
 ### Estrutura Grupo de Acesso
 
 - admin:
-  - possui acesso completo a todos os métodos e rotas;
+  - acesso completo aos métodos, rotas e recursos WEB;
 
   ```javascript
   {
@@ -461,6 +461,7 @@
   - acesso negado ao método POST (qualquer rota);
   - acesso ao método DELETE e GET apenas à rota /users e restrito ao usuário que a acessa;
   - acesso ao método PUT: completo na rota /universities e restrito ao usuário que acessa a rota /users;
+  - acesso restrito WEB (cadastro, log e configurações);
 
   ```javascript
   {
@@ -480,6 +481,7 @@
 - Configurações;
 - Login;
 - Temporizador de sessão;
+
 - Lista Universidades:
   - Busca por ID;
   - Busca por Nome;
