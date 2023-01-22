@@ -19,7 +19,7 @@
 
 ## Construção:
 
-| Recurso           |                                         |
+| Recursos          |                                         |
 | ----------------- | --------------------------------------- |
 | `API`             | Node                                    |
 | `WEB`             | React                                   |
@@ -425,7 +425,8 @@
   {
     "name": "user",
     "email": "user@email.com",
-    "password": "pass"
+    "password": "pass",
+    "access": "admin"
   }
   ```
 
