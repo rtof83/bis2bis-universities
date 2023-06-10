@@ -21,9 +21,10 @@
 
 | Recursos          |                                         |
 | ----------------- | --------------------------------------- |
-| `API`             | Node                                    |
-| `WEB`             | React                                   |
+| `API`             | Node 17                                 |
+| `WEB`             | React 18                                |
 | `Base de Dados`   | MongoDB                                 |
+| `ODM`             | Mongoose                                |
 | `Conteinerização` | Docker                                  |
 | `Autenticação`    | JWT                                     |
 | `Testes`          | Jest                                    |
