@@ -70,7 +70,7 @@
   - WEB (armazenado em instância Amazon S3)
     - http://bis2bis-uni.s3-website-us-east-1.amazonaws.com
   - API (instanciada em EC2 AWS)
-    - http://34.235.89.154:3001
+    - http://3.92.70.204:3001
 
 <!-- --- -->
 &nbsp;
@@ -84,24 +84,24 @@
   exemplo configuração:
 
   ```javascript
-  DB_USER = user              |
-  DB_PASS = password          |
-  DB_CLUSTER = cluster        |--> parâmetros base de dados
-  DB_URL = url.mongodb.net    |
-  DB_NAME = dbname            |
+  DB_USER = user             |
+  DB_PASS = password         |
+  DB_CLUSTER = cluster       |--> parâmetros base de dados
+  DB_URL = url.mongodb.net   |
+  DB_NAME = dbname           |
 
-  PORT = 3001               # -> porta API
+  PORT = 3001                # -> porta API
 
-  SECRET = secret_word      # -> chave utilizada para geração / autenticação do token
+  SECRET = secret_word       # -> chave utilizada para geração / autenticação do token
 
-  UPDATE_HOUR = 24          # -> intervalo (em horas) que a aplicação atualiza automaticamente a lista de universidades
+  UPDATE_HOUR = 24           # -> intervalo (em horas) que a aplicação atualiza automaticamente a lista de universidades
 
 
   ### initial config to database (configuração que será exportada para a collection "config")
 
-  PER_PAGE = 20             # -> número de registros por página (listas)
+  PER_PAGE = 20              # -> número de registros por página (listas)
 
-  TIMEOUT = 600000          # -> 'ms' or 'h' or 'd' (tempo de sessão)
+  TIMEOUT = 600000           # -> 'ms' or 'h' or 'd' (tempo de sessão)
 
   URL_CONFIG = http://universities.hipolabs.com/search?country=
   COUNTRIES_CONFIG = argentina, brazil, chile, colombia, paraguay, peru, suriname, uruguay
