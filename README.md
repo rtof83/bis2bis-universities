@@ -69,11 +69,10 @@
 
 - ### a aplicação pode ser acessada através dos links:
   - WEB (armazenado em instância Amazon S3)
-    - http://bis2bis-uni.s3-website-us-east-1.amazonaws.com
+    - http://uni-node-mongo.s3-website-us-east-1.amazonaws.com
   - API (instanciada em EC2 AWS)
-    - http://3.92.70.204:3001
+    - http://3.89.158.18:3001
 
-<!-- --- -->
 &nbsp;
 
 ## Configurações
@@ -162,7 +161,6 @@
       - "3000:3000"
   ```
 
-<!-- --- -->
 &nbsp;
 
 ## Estrutura da Base de Dados:
@@ -213,7 +211,6 @@
   message: String
   ```
 
-<!-- --- -->
 &nbsp;
 
 ### Implementações API:
